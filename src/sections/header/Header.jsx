@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import HeaderImage from "../../assets/header.jpg";
 import data from "./data";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -28,12 +27,10 @@ const Header = () => {
           ))}
         </div>
         <div className="info">
-          <h1>UI/UX Designer & Fullstack Web Developer</h1>
-          <h3>Hi, I'm Christine</h3>
+          <h1>Software Engineer | Backend & Cloud-Focused | Problem-Solver Across the Stack</h1>
+          <h3>Hi, I'm Simanye</h3>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos aliquam
-            aperiam facere quam laudantium voluptas quaerat! Ducimus numquam ex
-            quam velit voluptas architecto.
+          I'm a Junior Software Engineer with Backend & Cloud expertise, applying strong engineering principles to build scalable and secure systems. As an Applications Development student at CPUT, I approach software challenges with a problem-solving mindset, ensuring efficiency across different tech stacks. Always eager to learn, adapt, and tackle new opportunities in the ever-evolving tech landscape.
           </p>
           <a href="#contact" className="btn primary">
             Let's Talk
@@ -55,7 +52,7 @@ const Header = () => {
             </span>
           </div>
           <div className="inner__circle">
-            <img src={HeaderImage} alt="Header Portrait" />
+            <img src='https://i.postimg.cc/KjNYFm0m/IMG-20231017-WA0028_(1).png' alt="Header Portrait" />
           </div>
         </div>
       </div>
