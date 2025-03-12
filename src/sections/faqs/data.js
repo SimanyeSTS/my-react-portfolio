@@ -3,37 +3,49 @@ const data = [
     id: 1,
     question: "What do you need to start working on my project?",
     answer:
-      "It mostly depends on the type of project. But in general, you need a fair idea of what you want, then we can take it from there.",
+      "To get started, I'll need a clear understanding of your project requirements. Whether it's a web app or software solution, we’ll collaborate on features and functionality before I begin. If you have existing designs or documentation, that's also helpful!",
   },
   {
     id: 2,
     question: "How long will my project take to complete?",
     answer:
-      "This depends on the complexity of the project, your available, and your payment. Once you have this sorted out, I will give you a completion date.",
-  },
-  {
-    id: 5,
-    question: "Is hosting and domain registration inclusive in your pricing?",
-    answer:
-      "No! Hosting and domain is taken care of seperately. You can pay for it or take care of it on your own if you know how to.",
-  },
-  {
-    id: 4,
-    question: "How much do you charge for an average website or app?",
-    answer:
-      "Once again, this depends. But my prices are affordable so you're good.",
+      "The timeline depends on the scope and complexity of the project. For smaller, more straightforward applications, we can wrap things up in a few weeks. Larger systems with more complex requirements will take a few months. I'll always provide a rough estimate and keep you updated on the progress.",
   },
   {
     id: 3,
-    question: "What's your payment plan?",
+    question: "How do you handle security in your projects?",
     answer:
-      "Payment is divided into 3. An initial 30% upfront payment to get me started once all the details of the projec is set, 40% once the project is completed, and 30% once the project is delivered.",
+      "Security is a top priority. I ensure that all data is encrypted and follow best practices for backend security, such as securing APIs, using firewalls, and performing regular code audits. I also keep up with emerging security threats to ensure the safety of your application.",
+  },
+  {
+    id: 4,
+    question: "Do you work on cloud-based projects?",
+    answer:
+      "Yes! I work with cloud platforms like AWS, Google Cloud, and Azure. Cloud infrastructure is an essential part of most modern applications, and I help clients build scalable, cost-effective, and secure cloud solutions tailored to their needs.",
+  },
+  {
+    id: 5,
+    question: "What if I need updates or fixes after the project is completed?",
+    answer:
+      "I offer ongoing support to ensure everything runs smoothly. If any bugs or issues arise, or if you need updates, feel free to reach out. I'll work with you to make sure your project continues to meet your business needs over time.",
   },
   {
     id: 6,
-    question: "What if the project doesn't turn out good?",
+    question: "What is your pricing model?",
     answer:
-      "You will be a part of the process from the start. You will know how the whole project is going until the end. And I will make sure to give you the best.",
+      "My pricing depends on the project complexity. I offer competitive rates, and I’m transparent about the cost breakdown. Typically, I divide payments into three stages: 30% upfront, 40% during development, and 30% upon project completion and delivery.",
+  },
+  {
+    id: 7,
+    question: "What kind of software do you specialize in?",
+    answer:
+      "I specialize in building robust backend solutions, cloud architectures, and secure systems. Whether you're looking for an API, a database system, or a full-stack application, I ensure that your project is scalable, secure, and future-proof.",
+  },
+  {
+    id: 8,
+    question: "How can I get in touch with you for a consultation?",
+    answer:
+      "You can reach out to me directly through any of the links in my contact section (e.g., email, LinkedIn, etc.). I’ll respond within 24 hours to schedule a consultation and discuss your project in detail.",
   },
 ];
 

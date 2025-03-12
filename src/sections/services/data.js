@@ -1,32 +1,29 @@
-import { SiAdobexd } from "react-icons/si";
-import { RiReactjsLine } from "react-icons/ri";
-import { FaServer } from "react-icons/fa";
-import { AiFillAppstore } from "react-icons/ai";
+import { FaDatabase, FaCloud, FaLock, FaCode } from "react-icons/fa";
 
 const data = [
   {
     id: 1,
-    icon: <SiAdobexd />,
-    title: "UI/UX Design",
-    desc: "My designs are modern and intuitive. I use industry-standard rules to make sure your users have fun using your product.",
+    icon: <FaCode />,
+    title: "Software Engineering",
+    desc: "I build scalable, efficient, and maintainable software solutions using strong engineering principles, not just focusing on specific technologies.",
   },
   {
     id: 2,
-    icon: <RiReactjsLine />,
-    title: "Frontend Development",
-    desc: "Your product will look good and will be accessible on all devices, including mobile phones, tablets, and desktop.",
+    icon: <FaDatabase />,
+    title: "Backend Development",
+    desc: "I design and develop secure, high-performance backend systems, ensuring seamless data processing, APIs, and integrations.",
   },
   {
     id: 3,
-    icon: <FaServer />,
-    title: "Backend Development",
-    desc: "The security of your business/product is taken seriously right from the start of the project. I will make sure your website/app is secure from attacks.",
+    icon: <FaCloud />,
+    title: "Cloud & Infrastructure",
+    desc: "I deploy and manage cloud-based architectures, optimizing scalability and cost-efficiency using platforms like AWS and Azure.",
   },
   {
     id: 4,
-    icon: <AiFillAppstore />,
-    title: "App Development",
-    desc: "Unlike other developers in the market, I will building an app that runs on both IOS and Android devices without any extra cost to you.",
+    icon: <FaLock />,
+    title: "Cybersecurity & System Optimization",
+    desc: "I implement security best practices and optimize system performance to ensure robust, secure, and scalable applications.",
   },
 ];
 

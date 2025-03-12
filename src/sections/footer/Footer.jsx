@@ -2,6 +2,8 @@ import { links, socials } from "./data";
 import "./footer.css";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer>
       <div className="container footer__container">
@@ -26,7 +28,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="footer__copyright">
-        <small> 2025 Simanye Somdaka &copy; All Right Reserved</small>
+        <small> {currentYear} Simanye Somdaka &copy; All Rights Reserved</small>
       </div>
     </footer>
   );

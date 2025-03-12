@@ -7,8 +7,8 @@ const FAQs = () => {
     <section id="faqs">
       <h2>Frequently Asked Questions</h2>
       <p>
-        Here are some questions I usually get. Click to toggle the answer, and
-        if you have any other questions, feel free to shoot me a message below!
+        Here are some questions I usually get. Feel free to reach out with
+        anything else you're curious about. I'm always happy to help!
       </p>
       <div className="container faqs__container" data-aos="fade-in">
         {data.map((faq) => (

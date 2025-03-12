@@ -74,19 +74,9 @@ header {
   animation: move 30s linear infinite;
 }
 
-/* Base highlight class */
 .highlight {
   font-weight: bold;
-}
-
-/* For white background (bg-1) */
-:root:has([data-theme-background="bg-1"]) .highlight {
-  color: var(--color-black);
-}
-
-/* For dark background (bg-2) */
-:root:has([data-theme-background="bg-2"]) .highlight {
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 @keyframes move {
