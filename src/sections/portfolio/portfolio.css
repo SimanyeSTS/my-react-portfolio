@@ -18,11 +18,15 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
-  align-items: start;
+  align-items: stretch; /* Changed from 'start' to ensure equal heights */
 }
 
 .card.portfolio__project {
   animation: animateProject 800ms ease-in forwards;
+  height: 430px; /* Fixed height for all cards */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Ensures content doesn't overflow */
 }
 
 @keyframes animateProject {
@@ -36,22 +40,37 @@
 
 .portfolio__project-image {
   width: 100%;
-  height: fit-content;
-  min-height: 7rem;
-  max-height: 15rem;
+  height: 180px; /* Fixed height for all images */
   background: var(--color-light);
   border-radius: var(--border-radius-2);
   margin-bottom: 1.5rem;
   overflow: hidden;
 }
 
+.portfolio__project-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures images maintain aspect ratio while filling container */
+}
+
+.portfolio__project h4 {
+  margin-bottom: 0.5rem;
+  height: 1.5em; /* Fixed height for title */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .portfolio__project p {
-  margin: 0.5rem 0 2rem;
+  margin: 0.5rem 0 1rem;
+  height: 100px; /* Fixed height for description */
+  overflow-y: auto; /* Allows scrolling for longer descriptions */
 }
 
 .portfolio__project-cta {
   display: flex;
   gap: 1rem;
+  margin-top: auto; /* Pushes buttons to bottom of card */
 }
 
 .portfolio__project:hover .btn.sm {
@@ -70,6 +89,10 @@
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
   }
+  
+  .card.portfolio__project {
+    height: 400px; /* Adjust for tablet */
+  }
 }
 
 /* MEDIA QUERIES (phones) */
@@ -85,5 +108,9 @@
   .portfolio__projects {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+  
+  .card.portfolio__project {
+    height: 420px; /* Adjust for mobile */
   }
 }

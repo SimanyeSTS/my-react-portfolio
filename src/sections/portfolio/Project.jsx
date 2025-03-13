@@ -7,9 +7,9 @@ const Project = ({ project }) => {
   return (
     <Card className="portfolio__project">
       <div className="portfolio__project-image">
-        <img src={image} alt={title} />
+        <img src={image || "https://via.placeholder.com/400x200"} alt={title} />
       </div>
-      <h4>{title}</h4>
+      <h4 title={title}>{title}</h4>
       <p>{desc}</p>
       <div className="portfolio__project-cta">
         <a href={demo} className="btn sm primary" target="_blank" rel="noopener noreferrer">

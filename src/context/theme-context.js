@@ -5,6 +5,7 @@ export const ThemeContext = createContext();
 
 const initialThemeState = JSON.parse(localStorage.getItem("themeSettings")) || {
   primary: "color-1",
+  primaryHue: 270, // Default primary hue
   background: "bg-1",
 };
 

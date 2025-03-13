@@ -15,6 +15,21 @@ import { useRef, useState, useEffect } from "react";
 const App = () => {
   const { themeState } = useThemeContext();
 
+  // Dynamically update scrollbar styles when theme changes
+  useEffect(() => {
+    const root = document.documentElement;
+
+    // Update scrollbar thumb color
+    root.style.setProperty("--scrollbar-thumb-color", `hsl(${themeState.primaryHue}, 89%, 41%)`);
+
+    // Update scrollbar track color based on background color
+    if (themeState.background === "bg-1") {
+      root.style.setProperty("--scrollbar-track-color", "var(--color-light)");
+    } else if (themeState.background === "bg-2") {
+      root.style.setProperty("--scrollbar-track-color", "var(--color-dark)");
+    }
+  }, [themeState.primary, themeState.background]);
+
   const mainRef = useRef();
   const [showFloatingNav, setShowFloatingNav] = useState(true);
   const [siteYPostion, setSiteYPosition] = useState(0);

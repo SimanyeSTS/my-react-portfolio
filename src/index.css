@@ -206,6 +206,44 @@ img {
   padding: 0.5rem 1.2rem;
 }
 
+/*Scrollbar Styles*/
+/* Add this to src/index.css */
+
+/* Define CSS variables for scrollbar colors */
+:root {
+  --scrollbar-thumb-color: hsl(270, 89%, 41%); /* Default primary color */
+}
+
+/* WebKit Browsers (Chrome, Edge, Safari, Opera) */
+::-webkit-scrollbar {
+  width: 8px; /* Match the width from about.css */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; /* Remove the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color); /* Use the primary color */
+  border-radius: 10px; /* Match the border-radius from about.css */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: hsl(var(--primary-hue), 89%, 35%); /* Darker shade on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb-color) transparent; /* No track */
+}
+
+/* Internet Explorer & Old Edge */
+body {
+  scrollbar-face-color: var(--scrollbar-thumb-color);
+  scrollbar-track-color: transparent; /* No track */
+}
+
 /* MEDIA QUERIES (tablets) */
 @media screen and (max-width: 1024px) {
   body {
