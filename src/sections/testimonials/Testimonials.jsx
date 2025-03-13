@@ -9,7 +9,7 @@ const Resume = () => {
   return (
     <section id="resume">
       {/* Education Section */}
-      <div className="education-section">
+      <div className="education-section" data-aos="fade-in">
         <h2>Education</h2>
         <p className="subtext">
         Growth is not just about what you learn, but how you apply it to shape the world around you.

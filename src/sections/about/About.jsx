@@ -282,6 +282,7 @@ const About = () => {
       <div className="container about__container" data-aos="fade-in">
         <div className="about__content-container">
           <h2>About Me</h2>
+          <p>Every journey has a story—here’s mine.</p>
           <div className="about__cards">
             {data.map((item) => (
               <Card key={item.id} className="about__card">
@@ -309,6 +310,7 @@ const About = () => {
 
         <div className="skills__container" ref={skillsContainerRef}>
           <h2>Skills</h2>
+          <p>Empowered by knowledge, driven by skills—here’s what I bring to the table.</p>
           <div className="skills__floating-area">
             {skillsData.map((skill) => (
               <div key={skill.id} className="skill__icon-wrapper" draggable="false">

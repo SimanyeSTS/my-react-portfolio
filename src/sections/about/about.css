@@ -50,6 +50,10 @@
   align-self: flex-start;
 }
 
+.about__content-container, .skills__container p {
+  text-align: center;
+}
+
 /* Skills Container */
 .skills__container {
   background-color: var(--color-white);
@@ -74,6 +78,7 @@
 }
 
 .skills__floating-area {
+  cursor: grabbing !important;
   position: relative;
   flex-grow: 1;
   width: 100%;
@@ -137,6 +142,8 @@
   z-index: 10;
   height: 80px; /* Fixed height for skills names */
   overflow-y: auto; /* Allow scrolling if too many skills */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) var(--color-white);
 }
 
 .skill__name {
@@ -162,7 +169,11 @@ h2 {
 
 .skills__names::-webkit-scrollbar {
   width: 8px;
-  background-color: var(--color-white);
+  background-color: transparent;
+}
+
+.skills__names::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .skills__names::-webkit-scrollbar-thumb {

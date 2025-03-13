@@ -207,11 +207,11 @@ img {
 }
 
 /*Scrollbar Styles*/
-/* Add this to src/index.css */
 
 /* Define CSS variables for scrollbar colors */
 :root {
   --scrollbar-thumb-color: hsl(270, 89%, 41%); /* Default primary color */
+  --scrollbar-track-color: transparent; /* Default track color */
 }
 
 /* WebKit Browsers (Chrome, Edge, Safari, Opera) */
@@ -220,7 +220,7 @@ img {
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* Remove the track */
+  background: var(--scrollbar-track-color); /* Use the track color */
 }
 
 ::-webkit-scrollbar-thumb {
@@ -235,13 +235,29 @@ img {
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb-color) transparent; /* No track */
+  scrollbar-color: var(--scrollbar-thumb-color) var(--scrollbar-track-color); /* Use the track color */
 }
 
 /* Internet Explorer & Old Edge */
 body {
   scrollbar-face-color: var(--scrollbar-thumb-color);
-  scrollbar-track-color: transparent; /* No track */
+  scrollbar-track-color: var(--scrollbar-track-color); /* Use the track color */
+}
+
+* {
+  cursor: default !important;
+}
+
+/* Keep default cursor for interactive elements */
+button,
+a,
+input,
+textarea,
+select,
+label,
+.link,
+.btn {
+  cursor: pointer !important;
 }
 
 /* MEDIA QUERIES (tablets) */
