@@ -32,6 +32,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer !important; /* Add this line */
 }
 
 .header__socials a:hover {

@@ -12,8 +12,7 @@ const Resume = () => {
       <div className="education-section" data-aos="fade-in">
         <h2>Education</h2>
         <p className="subtext">
-        Growth is not just about what you learn, but how you apply it to shape the world around you.
-        </p>
+        Growth is not just about what you learn, but how you apply it to create meaningful change.        </p>
         <div className="education-list">
           <ul className="education-tabs">
             {data.education.map((edu, index) => (
@@ -45,8 +44,7 @@ const Resume = () => {
       <div className="experience-section">
         <h2>Work Experience</h2>
         <p className="subtext">
-        It's not just about the outcome, but the lessons learned along the way.
-        </p>
+        Every challenge is an opportunity to grow, refine skills, and drive impact.        </p>
         <div className="job-list">
           <ul className="job-tabs">
             {data.experience.map((job, index) => (

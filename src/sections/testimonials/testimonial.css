@@ -155,4 +155,10 @@ h2 {
     width: 25px;
     height: 25px;
   }
+
+  /* Add padding to the container to centralize content on mobile */
+  #resume {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 }

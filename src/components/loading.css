@@ -1,0 +1,198 @@
+/* Loading Screen Styles */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: background-color 0.8s ease-out;
+}
+
+/* Profile Area Styles */
+.loading-screen .profile__area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.loading-screen .outer__circle {
+  width: 26rem;
+  aspect-ratio: 1/1;
+  border: 1px solid var(--color-primary);
+  border-radius: 50%;
+  position: relative;
+  animation: move 30s linear infinite;
+}
+
+.loading-screen .tech-icon {
+  font-size: 1.2rem;
+  width: 4rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  position: absolute;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-screen .tech-icon:nth-child(1) {
+  left: calc(50% - 2rem);
+  top: -2rem;
+}
+
+.loading-screen .tech-icon:nth-child(2) {
+  right: -2rem;
+  top: calc(50% - 2rem);
+}
+
+.loading-screen .tech-icon:nth-child(3) {
+  left: -2rem;
+  top: calc(50% - 2rem);
+}
+
+.loading-screen .tech-icon:nth-child(4) {
+  bottom: -2rem;
+  left: calc(50% - 2rem);
+}
+
+.loading-screen .inner__circle {
+  position: absolute;
+  width: 18rem;
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+/* Progress Bar Styles */
+.loading-screen .progress-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 0.6s ease-out;
+}
+
+.loading-screen .progress-bar {
+  width: 200px;
+  height: 6px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.loading-screen .progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
+}
+
+.loading-screen .progress-text {
+  margin-top: 1rem;
+  font-size: 1rem;
+}
+
+/* Animation for fading out progress bar */
+.loading-screen .progress-container.fade-out {
+  opacity: 0;
+}
+
+/* Portfolio reveal animation */
+.loading-screen .portfolio-reveal {
+  position: absolute;
+  font-size: 2rem;
+  font-weight: bold;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.loading-screen.portfolio-ready .portfolio-reveal {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Dramatic screen dim effect */
+.loading-screen.dim-screen {
+  background-color: rgba(0, 0, 0, 0.95) !important; /* Override any theme colors with !important */
+  color: white !important;
+}
+
+.loading-screen.brighten-screen {
+  background-color: transparent !important;
+  transition: background-color 0.7s ease-in-out;
+}
+
+/* Keyframes for rotating animation */
+@keyframes move {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Fade out animation */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Media queries for responsive design */
+@media screen and (max-width: 1023px) {
+  .loading-screen .outer__circle {
+    width: 20rem;
+  }
+
+  .loading-screen .inner__circle {
+    width: 15rem;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .loading-screen .outer__circle {
+    width: 16rem;
+    height: 16rem;
+  }
+
+  .loading-screen .tech-icon {
+    width: 3rem;
+  }
+
+  .loading-screen .tech-icon:nth-child(1) {
+    left: calc(50% - 1.5rem);
+    top: -1.5rem;
+  }
+
+  .loading-screen .tech-icon:nth-child(2) {
+    right: -1.5rem;
+    top: calc(50% - 1.5rem);
+  }
+
+  .loading-screen .tech-icon:nth-child(3) {
+    left: -1.5rem;
+    top: calc(50% - 1.5rem);
+  }
+
+  .loading-screen .tech-icon:nth-child(4) {
+    bottom: -1.5rem;
+    left: calc(50% - 1.5rem);
+  }
+
+  .loading-screen .inner__circle {
+    width: 10rem;
+  }
+
+  .loading-screen .portfolio-reveal {
+    font-size: 1.5rem;
+  }
+}

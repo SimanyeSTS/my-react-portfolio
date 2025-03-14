@@ -35,6 +35,7 @@
 
 html {
   scroll-behavior: smooth;
+  /* Keep the default cursor visible */
 }
 
 body {
@@ -244,20 +245,81 @@ body {
   scrollbar-track-color: var(--scrollbar-track-color); /* Use the track color */
 }
 
-* {
-  cursor: default !important;
+/* Hide custom cursor on mobile/touch devices */
+@media (hover: none) and (pointer: coarse) {
+  .cursor-small, .cursor-large {
+    display: none !important;
+  }
 }
 
-/* Keep default cursor for interactive elements */
-button,
-a,
-input,
-textarea,
-select,
-label,
-.link,
-.btn {
-  cursor: pointer !important;
+/* Add this to your index.css or create a new loading-screen.css file and import it */
+
+/* Ensure the loading animation works on all screen sizes */
+@media screen and (max-width: 1023px) {
+  .loading-screen .outer__circle {
+    width: 20rem !important;
+  }
+
+  .loading-screen .inner__circle {
+    width: 15rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .loading-screen .outer__circle {
+    width: 16rem !important;
+    height: 16rem !important;
+  }
+
+  .loading-screen .outer__circle span {
+    width: 3rem !important;
+  }
+
+  .loading-screen .outer__circle span:nth-child(1) {
+    left: calc(50% - 1.5rem) !important;
+    top: -1.5rem !important;
+  }
+
+  .loading-screen .outer__circle span:nth-child(2) {
+    right: -1.5rem !important;
+    top: calc(50% - 1.5rem) !important;
+  }
+
+  .loading-screen .outer__circle span:nth-child(3) {
+    left: -1.5rem !important;
+    top: calc(50% - 1.5rem) !important;
+  }
+
+  .loading-screen .outer__circle span:nth-child(4) {
+    bottom: -1.5rem !important;
+    left: calc(50% - 1.5rem) !important;
+  }
+
+  .loading-screen .inner__circle {
+    width: 10rem !important;
+  }
+}
+
+/* Additional animation to ensure smooth transition */
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Make sure the loading screen blocks all content */
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+}
+
+/* Ensure body doesn't scroll during loading */
+body.loading {
+  overflow: hidden;
+  height: 100vh;
 }
 
 /* MEDIA QUERIES (tablets) */

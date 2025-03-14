@@ -10,11 +10,21 @@ import Footer from "./sections/footer/Footer";
 import FloatingNav from "./sections/floating-nav/FloatingNav";
 import Theme from "./theme/Theme";
 import CustomAnimatedCursor from "./components/CustomAnimatedCursor";
+import LoadingScreen from "./components/LoadingScreen";
 import { useThemeContext } from "./context/theme-context";
 import { useRef, useState, useEffect } from "react";
 
 const App = () => {
   const { themeState } = useThemeContext();
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Dynamically update the theme-color meta tag
+  useEffect(() => {
+    const themeColorMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeColorMeta) {
+      themeColorMeta.setAttribute('content', `hsl(${themeState.primaryHue}, 89%, 41%)`);
+    }
+  }, [themeState.primaryHue]);
 
   // Dynamically update scrollbar styles when theme changes
   useEffect(() => {
@@ -24,8 +34,6 @@ const App = () => {
     root.style.setProperty("--scrollbar-thumb-color", `hsl(${themeState.primaryHue}, 89%, 41%)`);
 
     // Update scrollbar track color based on background mode
-    // For light background (bg-1) set track to white
-    // For dark background (bg-2) set track to black
     if (themeState.background === "bg-1") {
       root.style.setProperty("--scrollbar-track-color", "white");
     } else if (themeState.background === "bg-2") {
@@ -45,9 +53,7 @@ const App = () => {
     setShowFloatingNav(false);
   };
 
-  // check if floating nav should be shown or hidden
   const floatingNavToggleHandler = () => {
-    // check if we scrolled up or down at least 20px
     if (
       siteYPostion < mainRef?.current?.getBoundingClientRect().y - 20 ||
       siteYPostion > mainRef?.current?.getBoundingClientRect().y + 20
@@ -66,24 +72,35 @@ const App = () => {
     return () => clearInterval(checkYPosition);
   }, [siteYPostion]);
 
+  // Handle loading complete
+  const handleLoadingComplete = () => {
+    setIsLoading(false);
+  };
+
   return (
-    <main
-      className={`${themeState.primary} ${themeState.background}`}
-      ref={mainRef}
-    >
+    <>
+      {/* CustomAnimatedCursor now renders first, ensuring it's on top */}
       <CustomAnimatedCursor />
-      <Navbar />
-      <Header />
-      <About id="about" />
-      <Services id="services" />
-      <Portfolio id="portfolio" />
-      <Testimonials id="testimonials" />
-      <FAQs id="faqs" />
-      <Contact id="contact" />
-      <Footer />
-      <Theme />
-      {showFloatingNav && <FloatingNav />}
-    </main>
+      
+      {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
+      
+      <main
+        className={`${themeState.primary} ${themeState.background}`}
+        ref={mainRef}
+      >
+        <Navbar />
+        <Header />
+        <About id="about" />
+        <Services id="services" />
+        <Portfolio id="portfolio" />
+        <Testimonials id="testimonials" />
+        <FAQs id="faqs" />
+        <Contact id="contact" />
+        <Footer />
+        <Theme />
+        {showFloatingNav && <FloatingNav />}
+      </main>
+    </>
   );
 };
 

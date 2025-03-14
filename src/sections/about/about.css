@@ -131,6 +131,7 @@
 }
 
 .skills__names {
+  cursor: pointer !important;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
