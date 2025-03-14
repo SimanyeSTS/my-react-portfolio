@@ -69,7 +69,7 @@ nav {
   background: transparent;
   color: white;
   font-size: 2rem;
-  cursor: pointer;
+  cursor: pointer !important;
 }
 
 /* HIDE NAV MENU ON TABLETS AND PHONES */

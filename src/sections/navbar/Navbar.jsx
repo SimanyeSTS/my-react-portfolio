@@ -10,46 +10,60 @@ const Navbar = () => {
   const [hoveredLink, setHoveredLink] = useState(null);
 
   useEffect(() => {
-    const sections = document.querySelectorAll("section");
-
+    // Get all section elements
+    const sections = {
+      home: document.querySelector("header"),
+      about: document.querySelector("#about"),
+      services: document.querySelector("#services"),
+      portfolio: document.querySelector("#portfolio"),
+      testimonials: document.querySelector("#testimonials"),
+      faqs: document.querySelector("#faqs"),
+      contact: document.querySelector("#contact")
+    };
+    
     const handleScroll = () => {
+      // Get current scroll position with offset for better detection
+      const scrollPosition = window.scrollY + 200;
+      
+      // Default to home/top for very top of page
       if (window.scrollY < 100) {
         setActiveLink("#");
+        return;
+      }
+      
+      // Determine which section is currently visible
+      let currentSection = "";
+      
+      // Check each section's position
+      for (const [id, section] of Object.entries(sections)) {
+        if (!section) continue; // Skip if section not found
+        
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.offsetHeight;
+        
+        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+          currentSection = id;
+          break;
+        }
+      }
+      
+      // Apply special case for portfolio, testimonials, and faqs
+      if (currentSection === "portfolio" || currentSection === "testimonials" || currentSection === "faqs") {
+        setActiveLink("#portfolio");
+      } else if (currentSection === "home") {
+        setActiveLink("#");
+      } else if (currentSection) {
+        setActiveLink(`#${currentSection}`);
       }
     };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const id = entry.target.id;
-            // Apply active link to both Portfolio, Testimonials, and FAQs
-            if (id === "portfolio" || id === "testimonials" || id === "faqs") {
-              setActiveLink("#portfolio"); // All these should trigger Portfolio active state
-            } else {
-              setActiveLink(`#${id}`);
-            }
-          }
-        });
-      },
-      {
-        rootMargin: "-100px 0px",
-        threshold: 0.5,
-      }
-    );
-
-    sections.forEach((section) => {
-      observer.observe(section);
-    });
-
+    
+    // Add scroll event listener
     window.addEventListener("scroll", handleScroll);
-
+    
+    // Initial check
     handleScroll();
-
+    
     return () => {
-      sections.forEach((section) => {
-        observer.unobserve(section);
-      });
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -57,17 +71,31 @@ const Navbar = () => {
   const handleLinkClick = (e, link) => {
     e.preventDefault();
     setActiveLink(link);
-
-    if (link === "#") {
+    
+    // Special handling for Portfolio link
+    if (link === "#portfolio") {
+      const portfolioSection = document.querySelector("#portfolio");
+      if (portfolioSection) {
+        window.scrollTo({
+          top: portfolioSection.offsetTop,
+          behavior: "smooth",
+        });
+      }
+    }
+    // Handle scrolling to other sections
+    else if (link === "#") {
       window.scrollTo({
         top: 0,
         behavior: "smooth",
       });
     } else {
-      document.querySelector(link)?.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+      const targetElement = document.querySelector(link);
+      if (targetElement) {
+        window.scrollTo({
+          top: targetElement.offsetTop,
+          behavior: "smooth",
+        });
+      }
     }
   };
 

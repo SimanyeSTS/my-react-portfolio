@@ -91,7 +91,7 @@
 }
 
 .skills__floating-area:active {
-  cursor: grabbing;
+  cursor: grabbing !important;
 }
 
 .skill__icon-wrapper {

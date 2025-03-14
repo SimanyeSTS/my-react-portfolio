@@ -73,15 +73,15 @@ const App = () => {
     >
       <CustomAnimatedCursor />
       <Navbar />
-  <Header />
-  <About id="about" />
-  <Services id="services" />
-  <Portfolio id="portfolio" />
-  <Testimonials id="testimonials" />
-  <FAQs id="faqs" />
-  <Contact id="contact" />
-  <Footer />
-
+      <Header />
+      <About id="about" />
+      <Services id="services" />
+      <Portfolio id="portfolio" />
+      <Testimonials id="testimonials" />
+      <FAQs id="faqs" />
+      <Contact id="contact" />
+      <Footer />
+      <Theme />
       {showFloatingNav && <FloatingNav />}
     </main>
   );

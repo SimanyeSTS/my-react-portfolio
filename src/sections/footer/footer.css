@@ -9,6 +9,42 @@ footer .nav__menu {
   justify-content: center;
 }
 
+/* Adding navbar styles for links */
+footer .nav__menu a {
+  color: white;
+  text-decoration: none;
+  position: relative;
+}
+
+footer .nav__menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: white;
+  transition: width 0.3s ease;
+}
+
+/* Hover animation */
+footer .nav__menu a.hovered::after {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Active animation */
+footer .nav__menu a.active::after {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
+/* Prevent redrawing active style */
+footer .nav__menu a.active.hovered::after {
+  width: 100%;
+  transition: width 0.3s ease;
+}
+
 .footer__socials {
   width: fit-content;
   display: flex;
