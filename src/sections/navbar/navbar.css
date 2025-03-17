@@ -7,7 +7,7 @@ nav {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1000; /* Ensure navbar stays on top */
+  z-index: 100; /* Lower than backdrop but above main content */
   box-shadow: 0 1rem 1.5rem hsla(var(--color-primary), 68%, 42%, 20%);
   transition: var(--transition);
 }

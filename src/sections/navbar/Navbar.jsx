@@ -2,6 +2,7 @@ import data from "./data";
 import { IoIosColorPalette } from "react-icons/io";
 import { useModalContext } from "../../context/modal-context";
 import { useState, useEffect } from "react";
+import logo from "../../assets/logo.jpg";
 import "./navbar.css";
 
 const Navbar = () => {
@@ -104,7 +105,7 @@ const Navbar = () => {
       <div className="container nav__container">
         <a href="index.html" className="nav__logo">
           <img
-            src="https://i.postimg.cc/zvtpyV80/20240422-102953.jpg"
+            src={logo}
             alt="Logo"
           />
         </a>

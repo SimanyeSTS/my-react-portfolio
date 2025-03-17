@@ -4,6 +4,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { MdDesignServices, MdCode, MdVideoLibrary } from "react-icons/md";
 import { HiServer } from "react-icons/hi";
+import profile from "../../assets/profile.png";
 import "./header.css";
 
 const Header = () => {
@@ -67,7 +68,7 @@ const Header = () => {
             </span>
           </div>
           <div className="inner__circle">
-            <img src='https://i.postimg.cc/KjNYFm0m/IMG-20231017-WA0028_(1).png' alt="Header Portrait" />
+            <img src={profile} alt="Header Portrait" />
           </div>
         </div>
       </div>

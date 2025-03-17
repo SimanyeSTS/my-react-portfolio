@@ -13,12 +13,33 @@
   transition: background-color 0.8s ease-out;
 }
 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
 /* Profile Area Styles */
 .loading-screen .profile__area {
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
+  opacity: 1;
+  transition: opacity 0.6s ease-out;
+  z-index: 2; /* Ensure the profile is above other elements */
+}
+
+/* Keep the profile area centered */
+.loading-screen .loading-profile {
+  position: relative;
+  margin-bottom: 120px; /* Make space for the progress bar below */
+}
+
+.loading-screen .profile__area.fade-out {
+  opacity: 0;
 }
 
 .loading-screen .outer__circle {
@@ -28,6 +49,14 @@
   border-radius: 50%;
   position: relative;
   animation: move 30s linear infinite;
+  /* Ensure the animation never stops */
+  animation-play-state: running !important;
+}
+
+/* Keep the spinner bright during dim screen */
+.loading-screen.dim-screen .keep-bright {
+  filter: brightness(1.5) !important;
+  opacity: 1 !important;
 }
 
 .loading-screen .tech-icon {
@@ -71,14 +100,19 @@
   overflow: hidden;
 }
 
-/* Progress Bar Styles */
+/* Progress Bar Styles - Ensure it's below the profile */
 .loading-screen .progress-container {
-  margin-top: 2rem;
+  position: absolute;
+  bottom: -100px; /* Position it below the profile */
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   opacity: 1;
   transition: opacity 0.6s ease-out;
+  z-index: 1; /* Ensure it's below the profile */
+  width: 100%;
 }
 
 .loading-screen .progress-bar {
@@ -103,21 +137,6 @@
 /* Animation for fading out progress bar */
 .loading-screen .progress-container.fade-out {
   opacity: 0;
-}
-
-/* Portfolio reveal animation */
-.loading-screen .portfolio-reveal {
-  position: absolute;
-  font-size: 2rem;
-  font-weight: bold;
-  opacity: 0;
-  transform: scale(0.8);
-  transition: opacity 1s ease, transform 1s ease;
-}
-
-.loading-screen.portfolio-ready .portfolio-reveal {
-  opacity: 1;
-  transform: scale(1);
 }
 
 /* Dramatic screen dim effect */
@@ -156,6 +175,10 @@
   .loading-screen .inner__circle {
     width: 15rem;
   }
+  
+  .loading-screen .loading-profile {
+    margin-bottom: 100px;
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -191,8 +214,8 @@
   .loading-screen .inner__circle {
     width: 10rem;
   }
-
-  .loading-screen .portfolio-reveal {
-    font-size: 1.5rem;
+  
+  .loading-screen .loading-profile {
+    margin-bottom: 80px;
   }
 }

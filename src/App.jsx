@@ -18,6 +18,17 @@ const App = () => {
   const { themeState } = useThemeContext();
   const [isLoading, setIsLoading] = useState(true);
 
+  // Always scroll to top on reload
+  useEffect(() => {
+    window.history.scrollRestoration = 'manual';
+    window.scrollTo(0, 0);
+    
+    // Reset route to home on reload
+    if (window.location.hash) {
+      window.location.hash = '';
+    }
+  }, []);
+
   // Dynamically update the theme-color meta tag
   useEffect(() => {
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
