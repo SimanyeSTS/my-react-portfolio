@@ -21,21 +21,6 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const textColor = isLightTheme ? '#100F0F' : 'white';
   const iconBgColor = isLightTheme ? 'white' : '#100F0F';
 
-  // Function to get the header profile position
-  const getHeaderProfilePosition = () => {
-    const headerProfile = document.querySelector('header .profile__area');
-    if (headerProfile) {
-      const rect = headerProfile.getBoundingClientRect();
-      return {
-        top: rect.top,
-        left: rect.left,
-        width: rect.width,
-        height: rect.height
-      };
-    }
-    return null;
-  };
-
   // Prevent scrolling when loading screen is visible
   useEffect(() => {
     document.body.style.overflow = isVisible ? 'hidden' : 'auto';
@@ -78,20 +63,19 @@ const LoadingScreen = ({ onLoadingComplete }) => {
               profileRef.current.classList.add('fade-out');
             }
             
-            // Step 4: Prepare for transition to header position
+            // Step 4: Apply dim screen effect after profile fades out
             setTimeout(() => {
               setProfileVisible(false);
               setPortfolioReady(true);
               
-              // Get final position for animation
-              const finalPosition = getHeaderProfilePosition();
-              
               if (loadingScreenRef.current) {
                 loadingScreenRef.current.classList.add('dim-screen');
                 
+                // Step 5: Apply brighten screen effect
                 setTimeout(() => {
                   loadingScreenRef.current.classList.add('brighten-screen');
                   
+                  // Step 6: End loading sequence
                   setTimeout(() => {
                     setIsVisible(false);
                     onLoadingComplete();
