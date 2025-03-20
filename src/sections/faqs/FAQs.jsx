@@ -1,22 +1,44 @@
 import data from "./data";
-import FAQ from "./FAQ";
-import "./faqs.css";
+import Certificate from "./Certfiticate";
+import { useState } from "react";
+import CertificateCategories from "./CertificateCategories";
+import "./certificates.css";
 
-const FAQs = () => {
+const Certificates = () => {
+  const [certificates, setCertificates] = useState(data);
+
+  const categories = data.map((item) => item.category);
+  const uniqueCategories = ["All", ...new Set(categories)];
+
+  const filterCertificatesHandler = (category) => {
+    if (category === "All") {
+      setCertificates(data);
+      return;
+    }
+
+    const filteredCertificates = data.filter(
+      (certificate) => certificate.category === category
+    );
+    setCertificates(filteredCertificates);
+  };
+
   return (
-    <section id="faqs">
-      <h2>Frequently Asked Questions</h2>
+    <section id="certificates">
+      <h2>Certificates & Badges</h2>
       <p>
-        Here are some questions I usually get. Feel free to reach out with
-        anything else you're curious about. I'm always happy to help!
+      Every certification is a milestone that reflects commitment, skills acquired, and readiness to take on new challenges.
       </p>
-      <div className="container faqs__container" data-aos="fade-in">
-        {data.map((faq) => (
-          <FAQ key={faq.id} faq={faq} />
+      <CertificateCategories
+        categories={uniqueCategories}
+        onFilterCertificates={filterCertificatesHandler}
+      />
+      <div className="container certificates__container" data-aos="fade-in">
+        {certificates.map((certificate) => (
+          <Certificate key={certificate.id} certificate={certificate} />
         ))}
       </div>
     </section>
   );
 };
 
-export default FAQs;
+export default Certificates;

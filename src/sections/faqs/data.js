@@ -1,52 +1,58 @@
 const data = [
   {
     id: 1,
-    question: "What do you need to start working on my project?",
-    answer:
-      "To get started, I'll need a clear understanding of your project requirements. Whether it's a web app or software solution, we’ll collaborate on features and functionality before I begin. If you have existing designs or documentation, that's also helpful!",
+    category: "Cloud Computing",
+    title: "AWS Skills Center - Cloud Practitioner: Foundations",
+    description: "I successfully completed the AWS Skills Centers: Becoming a Cloud Practitioner course, where I gained hands-on knowledge of AWS core services, including compute, security, storage, and database solutions. This experience solidified my foundational skills in cloud architecture and AWS best practices.",
+    issuer: "Amazon Web Services (AWS)",
+    date: "Nov 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
   },
   {
     id: 2,
-    question: "How long will my project take to complete?",
-    answer:
-      "The timeline depends on the scope and complexity of the project. For smaller, more straightforward applications, we can wrap things up in a few weeks. Larger systems with more complex requirements will take a few months. I'll always provide a rough estimate and keep you updated on the progress.",
+    category: "Operating Systems",
+    title: "Operating Systems Basics",
+    description: "I completed the Operating Systems Basics course by Cisco, where I gained a solid understanding of fundamental OS concepts. This includes explaining the purpose and characteristics of operating systems, implementing basic OS security measures, and configuring mobile device network connectivity and email.",
+    issuer: "Cisco Networking Academy",
+    date: "Sep 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
   },
   {
     id: 3,
-    question: "How do you handle security in your projects?",
-    answer:
-      "Security is a top priority. I ensure that all data is encrypted and follow best practices for backend security, such as securing APIs, using firewalls, and performing regular code audits. I also keep up with emerging security threats to ensure the safety of your application.",
+    category: "Programming",
+    title: "Python Essentials 1",
+    description: "I successfully completed the Python Essentials 1 course, where I mastered core programming concepts, Python syntax, and semantics. I also developed the ability to tackle essential coding tasks and solve implementation challenges using the Python Standard Library.",
+    issuer: "Cisco Networking Academy",
+    date: "Nov 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
   },
   {
     id: 4,
-    question: "Do you work on cloud-based projects?",
-    answer:
-      "Yes! I work with cloud platforms like AWS, Google Cloud, and Azure. Cloud infrastructure is an essential part of most modern applications, and I help clients build scalable, cost-effective, and secure cloud solutions tailored to their needs.",
+    category: "Programming",
+    title: "C++ Essentials 1",
+    description: "I successfully completed the C++ Essentials 1 course, where I gained a strong understanding of C++ fundamentals. This includes data types, flow control, arrays, pointers, memory management, and structures. I also learned essential programming techniques and the use of basic standard library functions in C++.",
+    issuer: "Cisco Networking Academy",
+    date: "Nov 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
   },
   {
     id: 5,
-    question: "What if I need updates or fixes after the project is completed?",
-    answer:
-      "I offer ongoing support to ensure everything runs smoothly. If any bugs or issues arise, or if you need updates, feel free to reach out. I'll work with you to make sure your project continues to meet your business needs over time.",
+    category: "Design",
+    title: "LC Studio Achievement - UI/UX",
+    description: "I earned the UI/UX achievement at LC Studio, demonstrating my ability to apply UI/UX principles effectively into website designs using Figma. This experience strengthened my skills in creating intuitive and visually appealing interfaces.",
+    issuer: "LC Studio",
+    date: "Oct 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
   },
   {
     id: 6,
-    question: "What is your pricing model?",
-    answer:
-      "My pricing depends on the project complexity. I offer competitive rates, and I’m transparent about the cost breakdown. Typically, I divide payments into three stages: 30% upfront, 40% during development, and 30% upon project completion and delivery.",
-  },
-  {
-    id: 7,
-    question: "What kind of software do you specialize in?",
-    answer:
-      "I specialize in building robust backend solutions, cloud architectures, and secure systems. Whether you're looking for an API, a database system, or a full-stack application, I ensure that your project is scalable, secure, and future-proof.",
-  },
-  {
-    id: 8,
-    question: "How can I get in touch with you for a consultation?",
-    answer:
-      "You can reach out to me directly through any of the links in my contact section (e.g., email, LinkedIn, etc.). I’ll respond within 24 hours to schedule a consultation and discuss your project in detail.",
-  },
+    category: "Project Management",
+    title: "LC Studio Achievement - SCRUM",
+    description: "I earned the SCRUM achievement at LC Studio by presenting a successful Go to Market strategy for a fast food app, SnackShack. This showcased my practical understanding of SCRUM principles, agile methodologies, and effective teamwork in delivering project outcomes.",
+    issuer: "LC Studio",
+    date: "Oct 2024",
+    credentialUrl: "#" // Replace with your actual credential URL
+  }
 ];
 
 export default data;

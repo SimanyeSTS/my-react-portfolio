@@ -1,3 +1,5 @@
+//import my projects images
+
 const data = [
   {
     id: 1,

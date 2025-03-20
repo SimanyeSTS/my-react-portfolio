@@ -1,5 +1,6 @@
 import data from "./data";
 import "./contact.css";
+import { FaMapMarkerAlt } from "react-icons/fa";
 
 const Contact = () => {
   return (
@@ -17,6 +18,10 @@ const Contact = () => {
             {contact.icon}
           </a>
         ))}
+      </div>
+      <div className="address-container" data-aos="fade-up">
+        <FaMapMarkerAlt className="address-icon" />
+        <p className="address-text">Brooklyn, Cape Town, South Africa</p>
       </div>
     </section>
   );

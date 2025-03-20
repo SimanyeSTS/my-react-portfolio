@@ -31,7 +31,7 @@ export default {
     {
       company: "The Western Cape Government",
       image: "https://i.postimg.cc/90Z3HTXn/wcg.png",
-      position: "Job Shadowing - Nursing",
+      position: "Job Shadowing - Nurse",
       year: "November 2021 - June 2022",
       description:
         "Assisted nurses and doctors with patient care, wound dressing, and medication delivery. Provided logistical support and worked night shifts to ensure continuous patient care. Gained hands-on experience in hospital operations and emergency response.",

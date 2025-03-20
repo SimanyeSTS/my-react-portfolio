@@ -1,0 +1,88 @@
+.certificates__categories {
+  margin-bottom: 2rem;
+}
+
+.certificates__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem 4rem;
+}
+
+.card.certificate:hover {
+  cursor: pointer;
+  background: var(--color-white);
+}
+
+.certificate > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+.certificate h5 {
+  line-height: 1.4;
+}
+
+.certificate__icon {
+  font-size: 1.2rem;
+  color: var(--color-black);
+  background: transparent;
+}
+
+.certificate__details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+  opacity: 0;
+  animation: animateDetails 500ms ease-in forwards;
+}
+
+@keyframes animateDetails {
+  to {
+    opacity: 1;
+  }
+}
+
+.certificate__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  color: var(--color-black);
+  margin-top: 0.5rem;
+}
+
+.certificate__issuer,
+.certificate__date {
+  margin: 0;
+}
+
+.certificate__view-btn {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+}
+
+/* Prevent certificate button click from triggering card collapse */
+.certificate__view-btn:focus {
+  outline: none;
+}
+
+/* MEDIA QUERIES (tablets) */
+@media screen and (max-width: 1024px) {
+  .certificates__container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* MEDIA QUERIES (phones) */
+@media screen and (max-width: 600px) {
+  .certificates__container {
+    gap: 1rem;
+  }
+  
+  .certificate__meta {
+    gap: 0.3rem;
+  }
+}

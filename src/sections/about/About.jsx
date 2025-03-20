@@ -23,6 +23,8 @@ const About = () => {
   const rotationSpeedRef = useRef({ x: 0, y: 0 });
   const sphereRotationRef = useRef({ x: 0.3, y: 0.3 }); // Initial rotation set to downwards
   const useDefaultRotationRef = useRef(true); // Track if we should use default rotation
+  const animatingToFrontRef = useRef(false); // Track if we're currently animating to front
+  const targetRotationRef = useRef({ x: 0, y: 0 }); // Target rotation for smooth animation
 
   const skillsData = [
     { id: 1, name: "JavaScript", icon: <SiJavascript /> },
@@ -48,6 +50,33 @@ const About = () => {
     { id: 21, name: "VS Code", icon: <SiVisualstudiocode /> },
     { id: 22, name: "Figma", icon: <SiFigma /> },
   ];
+
+  // Function to center a skill icon to the front with smooth animation
+  const centerSkillIcon = (icon) => {
+    const x = parseFloat(icon.dataset.baseX);
+    const y = parseFloat(icon.dataset.baseY);
+    const z = parseFloat(icon.dataset.baseZ);
+
+    // Calculate the required rotation to bring the icon to the front
+    const targetRotationX = -Math.atan2(y, z);
+    const targetRotationY = -Math.atan2(x, z);
+
+    // Set the target rotation
+    targetRotationRef.current = { x: targetRotationX, y: targetRotationY };
+    
+    // Enable animation to front
+    animatingToFrontRef.current = true;
+    
+    // Stop the default rotation
+    useDefaultRotationRef.current = false;
+    rotationSpeedRef.current = { x: 0, y: 0 };
+
+    // Apply hover effect
+    const iconElement = icon.querySelector('.skill__icon');
+    if (iconElement) {
+      iconElement.classList.add('active');
+    }
+  };
 
   useEffect(() => {
     if (!skillsContainerRef.current) return;
@@ -106,12 +135,41 @@ const About = () => {
       icon.dataset.z = point.z;
 
       icon.dataset.speedFactor = "1.0";
+
+      // Add click event listener to each icon
+      icon.addEventListener('click', (e) => {
+        e.stopPropagation(); // Prevent propagation
+        
+        // Remove active class from all icons
+        iconElements.forEach(el => {
+          const iconEl = el.querySelector('.skill__icon');
+          if (iconEl) iconEl.classList.remove('active');
+        });
+        
+        centerSkillIcon(icon);
+      });
     });
 
     // Animation function
     const animate = () => {
       if (!isDraggingRef.current) {
-        if (useDefaultRotationRef.current) {
+        if (animatingToFrontRef.current) {
+          // Animate smoothly to the target rotation
+          const easeAmount = 0.05; // Adjust for faster/slower animation
+          
+          // Smoothly interpolate current rotation towards target
+          sphereRotationRef.current.x += (targetRotationRef.current.x - sphereRotationRef.current.x) * easeAmount;
+          sphereRotationRef.current.y += (targetRotationRef.current.y - sphereRotationRef.current.y) * easeAmount;
+          
+          // Check if we're close enough to stop animating
+          const distX = Math.abs(targetRotationRef.current.x - sphereRotationRef.current.x);
+          const distY = Math.abs(targetRotationRef.current.y - sphereRotationRef.current.y);
+          
+          if (distX < 0.01 && distY < 0.01) {
+            animatingToFrontRef.current = false;
+          }
+        }
+        else if (useDefaultRotationRef.current) {
           // Default rotation mode (only used when page loads initially)
           sphereRotationRef.current.x += 0.001;
           sphereRotationRef.current.y += 0.001;
@@ -164,8 +222,18 @@ const About = () => {
     const handleMouseDown = (e) => {
       isDraggingRef.current = true;
       lastMousePosRef.current = { x: e.clientX, y: e.clientY };
+      
+      // Remove active class from all icons when starting to drag
+      iconElements.forEach(icon => {
+        const iconEl = icon.querySelector('.skill__icon');
+        if (iconEl) iconEl.classList.remove('active');
+      });
+      
       e.preventDefault();
       container.style.cursor = 'grabbing';
+      
+      // Stop any ongoing animation to front
+      animatingToFrontRef.current = false;
     };
 
     const handleMouseMove = (e) => {
@@ -174,17 +242,17 @@ const About = () => {
       const deltaX = e.clientX - lastMousePosRef.current.x;
       const deltaY = e.clientY - lastMousePosRef.current.y;
 
-      // Apply rotation directly during drag
+      // Apply rotation directly proportional to drag distance
+      // Fix for left-right dragging: Ensure direct mapping of drag direction to rotation
       sphereRotationRef.current.y += deltaX * 0.005;
       sphereRotationRef.current.x += deltaY * 0.005;
 
-      // Store rotation speed from user drag
-      // Important: We set constant rotation speed based on drag direction, not velocity
+      // Store rotation speed based on drag direction (not velocity)
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
-        // Set a small fixed rotation rate in the dragged direction
+        // Set a fixed rotation rate based on drag direction
         const speedMultiplier = 0.001; // Adjust this to control rotation speed
         
-        // Only update if there's significant movement
+        // Set rotation speeds directly based on the direction of drag
         rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
         rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
         
@@ -205,8 +273,18 @@ const About = () => {
       if (e.touches.length === 1) {
         isDraggingRef.current = true;
         lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+        
+        // Remove active class from all icons when starting to drag
+        iconElements.forEach(icon => {
+          const iconEl = icon.querySelector('.skill__icon');
+          if (iconEl) iconEl.classList.remove('active');
+        });
+        
         e.preventDefault();
         container.style.cursor = 'grabbing';
+        
+        // Stop any ongoing animation to front
+        animatingToFrontRef.current = false;
       }
     };
 
@@ -216,16 +294,17 @@ const About = () => {
       const deltaX = e.touches[0].clientX - lastMousePosRef.current.x;
       const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
 
-      // Apply rotation directly during drag
+      // Apply rotation directly proportional to drag distance
+      // Fix for left-right dragging: Ensure direct mapping of drag direction to rotation
       sphereRotationRef.current.y += deltaX * 0.005;
       sphereRotationRef.current.x += deltaY * 0.005;
 
-      // Store rotation speed from user drag - same logic as mouse move
+      // Store rotation speed based on drag direction (not velocity)
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
-        // Set a small fixed rotation rate in the dragged direction
+        // Set a fixed rotation rate based on drag direction
         const speedMultiplier = 0.001; // Adjust this to control rotation speed
         
-        // Only update if there's significant movement
+        // Set rotation speeds directly based on the direction of drag
         rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
         rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
         
@@ -260,6 +339,21 @@ const About = () => {
 
     window.addEventListener('resize', handleResize);
 
+    // Add click event listeners to skill names
+    const skillNames = container.querySelectorAll('.skill__name');
+    skillNames.forEach((skillName, index) => {
+      skillName.addEventListener('click', () => {
+        // Remove active class from all icons
+        iconElements.forEach(el => {
+          const iconEl = el.querySelector('.skill__icon');
+          if (iconEl) iconEl.classList.remove('active');
+        });
+        
+        const icon = iconElements[index];
+        centerSkillIcon(icon);
+      });
+    });
+
     return () => {
       if (animationRef.current) {
         cancelAnimationFrame(animationRef.current);
@@ -274,6 +368,11 @@ const About = () => {
       window.removeEventListener('touchend', handleTouchEnd);
 
       window.removeEventListener('resize', handleResize);
+
+      // Remove click event listeners from skill names
+      skillNames.forEach((skillName) => {
+        skillName.removeEventListener('click', () => {});
+      });
     };
   }, []);
 
@@ -282,7 +381,7 @@ const About = () => {
       <div className="container about__container" data-aos="fade-in">
         <div className="about__content-container">
           <h2>About Me</h2>
-          <p>Every journey has a story—here’s mine.</p>
+          <p>Every journey has a story—here's mine.</p>
           <div className="about__cards">
             {data.map((item) => (
               <Card key={item.id} className="about__card">
@@ -310,7 +409,7 @@ const About = () => {
 
         <div className="skills__container" ref={skillsContainerRef}>
           <h2>Skills</h2>
-          <p>Empowered by knowledge, driven by skills—here’s what I bring to the table.</p>
+          <p>Empowered by knowledge, driven by skills—here's what I bring to the table.</p>
           <div className="skills__floating-area">
             {skillsData.map((skill) => (
               <div key={skill.id} className="skill__icon-wrapper" draggable="false">

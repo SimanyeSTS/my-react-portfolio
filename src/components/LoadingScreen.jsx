@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { MdDesignServices, MdCode, MdVideoLibrary } from "react-icons/md";
 import { HiServer } from "react-icons/hi";
 import { useThemeContext } from "../context/theme-context";
+import profile from '../assets/profile.png';
 import './loading.css';
 
 const LoadingScreen = ({ onLoadingComplete }) => {
@@ -126,7 +127,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
               </span>
             </div>
             <div className="inner__circle">
-              <img src='https://i.postimg.cc/KjNYFm0m/IMG-20231017-WA0028_(1).png' alt="Header Portrait" />
+              <img src={profile} alt="Header Portrait" />
             </div>
           </div>
         )}
