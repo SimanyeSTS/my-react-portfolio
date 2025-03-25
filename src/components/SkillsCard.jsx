@@ -26,6 +26,7 @@ export default function SkillsCard({ data }) {
   return (
     <div className="skills__container" ref={skillsContainerRef}>
       <h2>{data.title}</h2>
+      <p>Empowered by knowledge, driven by skills—here's what I bring to the table.</p>
       <div className="skills__floating-area">
         <IconCloud iconSlugs={skills} />
       </div>
