@@ -1,6 +1,6 @@
 import { HiOutlineMail } from "react-icons/hi";
 import { AiOutlineLinkedin } from "react-icons/ai";
-import { FaWhatsapp } from "react-icons/fa";
+import { AiOutlinePhone } from "react-icons/ai";
 
 const data = [
   { id: 1, icon: <HiOutlineMail />, link: "mailto:simanyesomdaka@gmail.com" },
@@ -9,7 +9,7 @@ const data = [
     icon: <AiOutlineLinkedin />,
     link: "https://www.linkedin.com/in/simanye-somdaka-6501712b2/",
   },
-  { id: 3, icon: <FaWhatsapp />, link: "https://wa.me/+27730633069" },
+  { id: 3, link: "tel:+27730633069", icon: <AiOutlinePhone /> },
 ];
 
 export default data;

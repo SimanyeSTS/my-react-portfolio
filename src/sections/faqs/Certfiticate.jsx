@@ -15,11 +15,16 @@ const Certificate = ({ certificate }) => {
       </div>
       {showDetails && (
         <div className="certificate__details">
+          {/* Description with scrolling if needed */}
           <p>{certificate.description}</p>
+          
+          {/* Meta information with fixed position */}
           <div className="certificate__meta">
             <p className="certificate__issuer">Issued by: {certificate.issuer}</p>
             <p className="certificate__date">Issued: {certificate.date}</p>
           </div>
+          
+          {/* Button always at the bottom */}
           <a 
             href={certificate.credentialUrl} 
             className="btn sm primary certificate__view-btn" 

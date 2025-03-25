@@ -132,7 +132,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
           </div>
         )}
         
-        {/* Progress bar that appears below the profile */}
+        {}
         {progressBarVisible && (
           <div ref={progressBarRef} className="progress-container">
             <div className="progress-bar">

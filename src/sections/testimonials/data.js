@@ -26,7 +26,7 @@ export default {
       position: "Software Engineering Intern",
       year: "September 2024 - Present",
       description:
-        "Gained experience in cloud computing, backend architecture, and frontend development; completed AWS Cloud Practitioner, Python, and C++ courses; provided consultative insights on backend solutions; now leading Flutter-based Android development while mentoring new interns in an Agile environment.",
+        "Gained experience in cloud computing, backend architecture, and frontend development; completed AWS Cloud Practitioner, Python, and C++ courses; provided consultative insights on backend solutions. Currently leading Flutter-based Android development while mentoring teammates and fostering collaboration in an Agile environment.",
     },
     {
       company: "The Western Cape Government",
