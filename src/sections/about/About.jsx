@@ -1,36 +1,52 @@
-import React from "react";
+import React, { useRef } from "react";
 import CV from "../../assets/cv.pdf";
 import { HiDownload } from "react-icons/hi";
 import data from "./data";
 import Card from "../../components/Card";
-import SkillsCard from "../../components/SkillsCard";
 import "./about.css";
+import {
+  FaReact, FaNode, FaJava, FaPython,
+  FaHtml5, FaCss3Alt, FaDatabase, FaCloud,
+  FaCode, FaGitAlt, FaDocker, FaGithub, FaGitlab
+} from "react-icons/fa";
+import {
+  SiJavascript, SiTailwindcss, SiMongodb,
+  SiExpress, SiNextdotjs, SiSqlite,
+  SiTestinglibrary, SiFigma, SiVisualstudiocode
+} from "react-icons/si";
+import IconCloud from "../../components/IconCloud";
 
 const About = () => {
-  // Skills data matching the Next.js portfolio structure
-  const skillsData = {
-    title: "Skills",
-    skills: { 
-      python: "Python", 
-      javascript: "JavaScript", 
-      java: "Java", 
-      react: "React", 
-      html5: "HTML5", 
-      css3: "CSS3", 
-      nodedotjs: "Node.js", 
-      express: "Express", 
-      nextdotjs: "Next.js", 
-      sqlite: "SQLite", 
-      tailwindcss: "Tailwind", 
-      mongodb: "MongoDB", 
-      testinglibrary: "Testing", 
-      docker: "Docker", 
-      git: "Git", 
-      github: "GitHub", 
-      gitlab: "GitLab", 
-      visualstudiocode: "VS Code", 
-      figma: "Figma" 
-    }
+  const skillsContainerRef = useRef(null);
+  
+  const skillsData = [
+    { id: 1, name: "JavaScript", icon: <SiJavascript /> },
+    { id: 2, name: "React", icon: <FaReact /> },
+    { id: 3, name: "Node.js", icon: <FaNode /> },
+    { id: 4, name: "Python", icon: <FaPython /> },
+    { id: 5, name: "Java", icon: <FaJava /> },
+    { id: 6, name: "HTML5", icon: <FaHtml5 /> },
+    { id: 7, name: "CSS3", icon: <FaCss3Alt /> },
+    { id: 8, name: "MongoDB", icon: <SiMongodb /> },
+    { id: 9, name: "Tailwind", icon: <SiTailwindcss /> },
+    { id: 10, name: "Git", icon: <FaGitAlt /> },
+    { id: 11, name: "Docker", icon: <FaDocker /> },
+    { id: 12, name: "Backend", icon: <FaCode /> },
+    { id: 13, name: "Cloud", icon: <FaCloud /> },
+    { id: 14, name: "Database", icon: <FaDatabase /> },
+    { id: 15, name: "Express", icon: <SiExpress /> },
+    { id: 16, name: "Next.js", icon: <SiNextdotjs /> },
+    { id: 17, name: "SQLite", icon: <SiSqlite /> },
+    { id: 18, name: "Testing", icon: <SiTestinglibrary /> },
+    { id: 19, name: "GitHub", icon: <FaGithub /> },
+    { id: 20, name: "GitLab", icon: <FaGitlab /> },
+    { id: 21, name: "VS Code", icon: <SiVisualstudiocode /> },
+    { id: 22, name: "Figma", icon: <SiFigma /> },
+  ];
+
+  const handleIconClick = (skill) => {
+    console.log("Selected skill:", skill.name);
+    // You could add additional logic here like highlighting the skill name
   };
 
   return (
@@ -64,8 +80,25 @@ const About = () => {
           </a>
         </div>
 
-        {/* Replaced the old skills sphere with the new SkillsCard */}
-        <SkillsCard data={skillsData} />
+        <div className="skills__container" ref={skillsContainerRef}>
+          <h2>Skills</h2>
+          <p>Empowered by knowledge, driven by skills—here's what I bring to the table.</p>
+          <div className="skills__floating-area">
+            <IconCloud 
+              icons={skillsData} 
+              radius={200} 
+              speed={0.003}
+              dragSpeed={0.05}      // How responsive to mouse drag
+              initialSpeed={0.003}  // Base rotation speed
+              onClick={handleIconClick}
+            />
+          </div>
+          <div className="skills__names">
+            {skillsData.map((skill) => (
+              <span key={skill.id} className="skill__name">{skill.name}</span>
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
