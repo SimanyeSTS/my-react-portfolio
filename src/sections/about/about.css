@@ -67,7 +67,7 @@
   min-height: 500px;
   overflow: hidden;
   perspective: 1500px;
-  touch-action: none; /* Prevent default touch actions for better mobile experience */
+  touch-action: none;
 }
 
 .skills__container h2 {
@@ -82,11 +82,11 @@
   position: relative;
   flex-grow: 1;
   width: 100%;
-  height: calc(100% - 110px); /* Adjusted to leave proper space for header and skill names */
+  height: calc(100% - 110px);
   min-height: 300px;
   transform-style: preserve-3d;
   margin-bottom: 1rem;
-  overflow: visible; /* Allow icons to slightly overflow if needed */
+  overflow: visible;
 }
 
 .skills__floating-area:active {
@@ -95,14 +95,14 @@
 
 .skill__icon-wrapper {
   position: absolute;
-  width: 40px; /* Consistent size */
-  height: 40px; /* Consistent size */
+  width: 50px;
+  height: 50px;
   top: 0;
   left: 0;
   transform-style: preserve-3d;
   will-change: transform, opacity;
   user-select: none;
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.3s ease-out, transform 0.3s ease-out;
   pointer-events: auto;
 }
 
@@ -125,7 +125,7 @@
 .skill__icon:hover, .skill__icon.active {
   background-color: var(--color-primary);
   color: var(--color-white);
-  transform: scale(1.1);
+  transform: scale(1.2);
   z-index: 1000 !important;
 }
 
@@ -140,8 +140,8 @@
   border-top: 1px solid var(--color-light);
   position: relative;
   z-index: 10;
-  height: 80px; /* Fixed height for skills names */
-  overflow-y: auto; /* Allow scrolling if too many skills */
+  height: 80px;
+  overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) var(--color-white);
 }
@@ -181,7 +181,6 @@ h2 {
   border-radius: 10px;
 }
 
-
 /* MEDIA QUERIES (tablets) */
 @media screen and (max-width: 1024px) {
   .about__container {
@@ -195,12 +194,12 @@ h2 {
   }
 
   .skills__container {
-    min-height: 450px; /* Increased to provide more space */
+    min-height: 450px;
     padding: 1.5rem;
   }
 
   .skills__floating-area {
-    min-height: 320px; /* Increased height for better visibility */
+    min-height: 320px;
     height: calc(100% - 100px);
   }
 
@@ -228,8 +227,8 @@ h2 {
   }
 
   .skill__icon-wrapper {
-    width: 35px;
-    height: 35px;
+    width: 40px;
+    height: 40px;
   }
 
   .skill__icon {
