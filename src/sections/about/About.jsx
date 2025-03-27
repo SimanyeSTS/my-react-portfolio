@@ -58,11 +58,17 @@ const About = () => {
     const z = parseFloat(icon.dataset.baseZ);
 
     // Calculate the required rotation to bring the icon to the front
-    const targetRotationX = -Math.atan2(y, z);
+    // Using atan2 with proper sign handling for all quadrants
     const targetRotationY = -Math.atan2(x, z);
-
+    
+    // For X rotation, we clamp it to prevent flipping
+    const targetRotationX = -Math.atan2(y, Math.sqrt(x * x + z * z));
+    
     // Set the target rotation
-    targetRotationRef.current = { x: targetRotationX, y: targetRotationY };
+    targetRotationRef.current = { 
+      x: targetRotationX, 
+      y: targetRotationY 
+    };
 
     // Enable animation to front
     animatingToFrontRef.current = true;
@@ -155,7 +161,7 @@ const About = () => {
       if (!isDraggingRef.current) {
         if (animatingToFrontRef.current) {
           // Animate smoothly to the target rotation
-          const easeAmount = 0.05; // Adjust for faster/slower animation
+          const easeAmount = 0.1; // Increased for faster animation
 
           // Smoothly interpolate current rotation towards target
           sphereRotationRef.current.x += (targetRotationRef.current.x - sphereRotationRef.current.x) * easeAmount;
@@ -179,6 +185,10 @@ const About = () => {
           sphereRotationRef.current.y += rotationSpeedRef.current.y;
         }
       }
+
+      // Clamp the X rotation to prevent flipping
+      const MAX_X_ROTATION = Math.PI / 2.5; // About 72 degrees
+      sphereRotationRef.current.x = Math.max(-MAX_X_ROTATION, Math.min(MAX_X_ROTATION, sphereRotationRef.current.x));
 
       // Apply rotation matrix to each icon
       iconElements.forEach((icon) => {

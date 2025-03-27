@@ -26,7 +26,7 @@ const Certificates = () => {
     <section id="certificates">
       <h2>Certificates & Badges</h2>
       <p>
-      Every certification is a milestone that reflects commitment, skills acquired, and readiness to take on new challenges.
+      Every credential is a milestone that reflects commitment, skills acquired, and readiness to take on new challenges.
       </p>
       <CertificateCategories
         categories={uniqueCategories}

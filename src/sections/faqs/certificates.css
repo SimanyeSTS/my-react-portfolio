@@ -40,7 +40,8 @@
   margin-top: 1rem;
   opacity: 0;
   animation: animateDetails 500ms ease-in forwards;
-  min-height: 200px; /* Minimum height instead of fixed height */
+  min-height: 300px; /* Increased minimum height */
+  position: relative; /* Added to help with button positioning */
 }
 
 @keyframes animateDetails {
@@ -49,29 +50,31 @@
   }
 }
 
-/* Description with max height and scroll */
-.certificate__details > p {
-  max-height: 100px; /* Max height for description */
+.certificate__description-wrapper {
+  flex-grow: 1; /* Allow description to take available space */
+}
+
+.certificate__description {
+  max-height: 100px;
   overflow-y: auto;
   margin-bottom: 1rem;
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) transparent;
 }
 
-.certificate__details > p::-webkit-scrollbar {
+.certificate__description::-webkit-scrollbar {
   width: 6px;
 }
 
-.certificate__details > p::-webkit-scrollbar-track {
+.certificate__description::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.certificate__details > p::-webkit-scrollbar-thumb {
+.certificate__description::-webkit-scrollbar-thumb {
   background-color: var(--color-primary);
   border-radius: 10px;
 }
 
-/* Meta information */
 .certificate__meta {
   display: flex;
   flex-direction: column;
@@ -86,9 +89,14 @@
   margin: 0;
 }
 
-/* Button */
+.certificate__button-wrapper {
+  margin-top: auto; /* Push button to the bottom */
+  width: 100%;
+}
+
 .certificate__view-btn {
   align-self: flex-start;
+  display: inline-block;
   margin-top: 0.5rem;
 }
 
