@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useMemo, memo } from "react";
 import CV from "../../assets/cv.pdf";
 import { HiDownload } from "react-icons/hi";
 import data from "./data";
@@ -15,18 +15,18 @@ import {
   SiTestinglibrary, SiFigma, SiVisualstudiocode
 } from "react-icons/si";
 
-const About = () => {
+const About = memo(() => {
   const skillsContainerRef = useRef(null);
   const animationRef = useRef(null);
   const isDraggingRef = useRef(false);
   const lastMousePosRef = useRef({ x: 0, y: 0 });
   const rotationSpeedRef = useRef({ x: 0, y: 0 });
-  const sphereRotationRef = useRef({ x: 0.3, y: 0.3 }); // Initial rotation set to downwards
-  const useDefaultRotationRef = useRef(true); // Track if we should use default rotation
-  const animatingToFrontRef = useRef(false); // Track if we're currently animating to front
-  const targetRotationRef = useRef({ x: 0, y: 0 }); // Target rotation for smooth animation
+  const sphereRotationRef = useRef({ x: 0.3, y: 0.3 }); 
+  const useDefaultRotationRef = useRef(true);
+  const animatingToFrontRef = useRef(false);
+  const targetRotationRef = useRef({ x: 0, y: 0 });
 
-  const skillsData = [
+  const skillsData = useMemo(() => [
     { id: 1, name: "JavaScript", icon: <SiJavascript /> },
     { id: 2, name: "React", icon: <FaReact /> },
     { id: 3, name: "Node.js", icon: <FaNode /> },
@@ -49,40 +49,61 @@ const About = () => {
     { id: 20, name: "GitLab", icon: <FaGitlab /> },
     { id: 21, name: "VS Code", icon: <SiVisualstudiocode /> },
     { id: 22, name: "Figma", icon: <SiFigma /> },
-  ];
+  ], []);
 
-  // Function to center a skill icon to the front with smooth animation
-  const centerSkillIcon = (icon) => {
+  const LazySkillIcon = ({ icon }) => {
+    const [LoadedIcon, setLoadedIcon] = React.useState(() => () => null);
+
+    React.useEffect(() => {
+      const loadIcon = async () => {
+        try {
+          const loadedIcon = await Promise.resolve(icon);
+          setLoadedIcon(() => () => loadedIcon);
+        } catch (error) {
+          console.error('Icon loading failed', error);
+        }
+      };
+
+      loadIcon();
+    }, [icon]);
+
+    return <LoadedIcon />;
+  };
+
+  const centerSkillIcon = React.useCallback((icon, container) => {
+    const iconElements = container.querySelectorAll('.skill__icon-wrapper');
+    const skillNames = container.querySelectorAll('.skill__name');
+
+    iconElements.forEach(el => {
+      const iconEl = el.querySelector('.skill__icon');
+      if (iconEl) iconEl.classList.remove('active');
+    });
+    skillNames.forEach(name => name.classList.remove('active'));
+
     const x = parseFloat(icon.dataset.baseX);
     const y = parseFloat(icon.dataset.baseY);
     const z = parseFloat(icon.dataset.baseZ);
 
-    // Calculate the required rotation to bring the icon to the front
-    // Using atan2 with proper sign handling for all quadrants
     const targetRotationY = -Math.atan2(x, z);
-    
-    // For X rotation, we clamp it to prevent flipping
     const targetRotationX = -Math.atan2(y, Math.sqrt(x * x + z * z));
-    
-    // Set the target rotation
+
     targetRotationRef.current = { 
       x: targetRotationX, 
       y: targetRotationY 
     };
 
-    // Enable animation to front
     animatingToFrontRef.current = true;
-
-    // Stop the default rotation
     useDefaultRotationRef.current = false;
     rotationSpeedRef.current = { x: 0, y: 0 };
 
-    // Apply hover effect
     const iconElement = icon.querySelector('.skill__icon');
     if (iconElement) {
       iconElement.classList.add('active');
     }
-  };
+
+    const index = Array.from(iconElements).indexOf(icon);
+    skillNames[index].classList.add('active');
+  }, []);
 
   useEffect(() => {
     if (!skillsContainerRef.current) return;
@@ -95,26 +116,24 @@ const About = () => {
       cancelAnimationFrame(animationRef.current);
     }
 
-    // Calculate the radius based on container size
     const containerRect = container.getBoundingClientRect();
-    const containerHeight = containerRect.height - 100; // Subtract space for skill names
+    const containerHeight = containerRect.height - 100;
     const radius = Math.min(containerRect.width, containerHeight) * 0.45;
 
-    // Center position in the upper part of the container
     const center = {
       x: containerRect.width / 2,
-      y: (containerHeight / 2) - 20,
+      y: (containerHeight / 2) - 40,
     };
 
-    // Create a 3D sphere distribution of points
     const createSpherePoints = (n) => {
       const points = [];
-      const phi = Math.PI * (3 - Math.sqrt(5));
+      const goldenRatio = (1 + Math.sqrt(5)) / 2;
+      const angleIncrement = Math.PI * 2 * goldenRatio;
 
       for (let i = 0; i < n; i++) {
         const y = 1 - (i / (n - 1)) * 2;
         const radius = Math.sqrt(1 - y * y);
-        const theta = phi * i;
+        const theta = angleIncrement * i;
 
         const x = Math.cos(theta) * radius;
         const z = Math.sin(theta) * radius;
@@ -125,10 +144,8 @@ const About = () => {
       return points;
     };
 
-    // Generate sphere points
     const spherePoints = createSpherePoints(total);
 
-    // Assign 3D coordinates to each icon
     iconElements.forEach((icon, index) => {
       const point = spherePoints[index];
 
@@ -142,32 +159,20 @@ const About = () => {
 
       icon.dataset.speedFactor = "1.0";
 
-      // Add click event listener to each icon
       icon.addEventListener('click', (e) => {
-        e.stopPropagation(); // Prevent propagation
-
-        // Remove active class from all icons
-        iconElements.forEach(el => {
-          const iconEl = el.querySelector('.skill__icon');
-          if (iconEl) iconEl.classList.remove('active');
-        });
-
-        centerSkillIcon(icon);
+        e.stopPropagation();
+        centerSkillIcon(icon, container);
       });
     });
 
-    // Animation function
     const animate = () => {
       if (!isDraggingRef.current) {
         if (animatingToFrontRef.current) {
-          // Animate smoothly to the target rotation
-          const easeAmount = 0.1; // Increased for faster animation
+          const easeAmount = 0.1;
 
-          // Smoothly interpolate current rotation towards target
           sphereRotationRef.current.x += (targetRotationRef.current.x - sphereRotationRef.current.x) * easeAmount;
           sphereRotationRef.current.y += (targetRotationRef.current.y - sphereRotationRef.current.y) * easeAmount;
 
-          // Check if we're close enough to stop animating
           const distX = Math.abs(targetRotationRef.current.x - sphereRotationRef.current.x);
           const distY = Math.abs(targetRotationRef.current.y - sphereRotationRef.current.y);
 
@@ -176,47 +181,38 @@ const About = () => {
           }
         }
         else if (useDefaultRotationRef.current) {
-          // Default rotation mode (only used when page loads initially)
           sphereRotationRef.current.x += 0.001;
           sphereRotationRef.current.y += 0.001;
         } else {
-          // Apply the user's drag direction continuously
           sphereRotationRef.current.x += rotationSpeedRef.current.x;
           sphereRotationRef.current.y += rotationSpeedRef.current.y;
         }
       }
 
-      // Clamp the X rotation to prevent flipping
-      const MAX_X_ROTATION = Math.PI / 2.5; // About 72 degrees
+      const MAX_X_ROTATION = Math.PI / 2;
       sphereRotationRef.current.x = Math.max(-MAX_X_ROTATION, Math.min(MAX_X_ROTATION, sphereRotationRef.current.x));
 
-      // Apply rotation matrix to each icon
       iconElements.forEach((icon) => {
         let x = parseFloat(icon.dataset.baseX);
         let y = parseFloat(icon.dataset.baseY);
         let z = parseFloat(icon.dataset.baseZ);
         const speedFactor = parseFloat(icon.dataset.speedFactor);
 
-        // Apply Y-axis rotation
         const cosY = Math.cos(sphereRotationRef.current.y * speedFactor);
         const sinY = Math.sin(sphereRotationRef.current.y * speedFactor);
         const tempX = x * cosY + z * sinY;
         const tempZ = z * cosY - x * sinY;
 
-        // Apply X-axis rotation
         const cosX = Math.cos(sphereRotationRef.current.x * speedFactor);
         const sinX = Math.sin(sphereRotationRef.current.x * speedFactor);
         const tempY = y * cosX + tempZ * sinX;
         const finalZ = tempZ * cosX - y * sinX;
 
-        // Apply perspective and scaling
         const scale = (finalZ + 2) / 3;
 
-        // Calculate screen position
         const translateX = tempX * radius * scale + center.x;
         const translateY = tempY * radius * scale + center.y;
 
-        // Update visual position
         icon.style.transform = `translate(${translateX - 25}px, ${translateY - 25}px) scale(${0.8 + scale * 0.5})`;
         icon.style.opacity = Math.max(0.2, (finalZ + 1) / 2).toFixed(2);
         icon.style.zIndex = Math.floor((finalZ + 1) * 100);
@@ -225,24 +221,22 @@ const About = () => {
       animationRef.current = requestAnimationFrame(animate);
     };
 
-    // Start the animation
     animate();
 
-    // Mouse and touch event handlers
     const handleMouseDown = (e) => {
       isDraggingRef.current = true;
       lastMousePosRef.current = { x: e.clientX, y: e.clientY };
 
-      // Remove active class from all icons when starting to drag
       iconElements.forEach(icon => {
         const iconEl = icon.querySelector('.skill__icon');
         if (iconEl) iconEl.classList.remove('active');
       });
 
+      const skillNames = container.querySelectorAll('.skill__name');
+      skillNames.forEach(name => name.classList.remove('active'));
+
       e.preventDefault();
       container.style.cursor = 'grabbing';
-
-      // Stop any ongoing animation to front
       animatingToFrontRef.current = false;
     };
 
@@ -252,13 +246,11 @@ const About = () => {
       const deltaX = e.clientX - lastMousePosRef.current.x;
       const deltaY = e.clientY - lastMousePosRef.current.y;
 
-      // Apply rotation directly proportional to drag distance
       sphereRotationRef.current.y += deltaX * 0.005;
-      sphereRotationRef.current.x += deltaY * 0.005;
+      sphereRotationRef.current.x += deltaY * 0.003;
 
-      // Store rotation speed based on drag direction (not velocity)
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
-        const speedMultiplier = 0.001; // Adjust this to control rotation speed
+        const speedMultiplier = 0.001;
         rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
         rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
         useDefaultRotationRef.current = false;
@@ -272,22 +264,21 @@ const About = () => {
       container.style.cursor = 'grab';
     };
 
-    // Touch event handlers for mobile
     const handleTouchStart = (e) => {
       if (e.touches.length === 1) {
         isDraggingRef.current = true;
         lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
 
-        // Remove active class from all icons when starting to drag
         iconElements.forEach(icon => {
           const iconEl = icon.querySelector('.skill__icon');
           if (iconEl) iconEl.classList.remove('active');
         });
 
+        const skillNames = container.querySelectorAll('.skill__name');
+        skillNames.forEach(name => name.classList.remove('active'));
+
         e.preventDefault();
         container.style.cursor = 'grabbing';
-
-        // Stop any ongoing animation to front
         animatingToFrontRef.current = false;
       }
     };
@@ -298,13 +289,11 @@ const About = () => {
       const deltaX = e.touches[0].clientX - lastMousePosRef.current.x;
       const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
 
-      // Apply rotation directly proportional to drag distance
       sphereRotationRef.current.y += deltaX * 0.005;
-      sphereRotationRef.current.x += deltaY * 0.005;
+      sphereRotationRef.current.x += deltaY * 0.003;
 
-      // Store rotation speed based on drag direction (not velocity)
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
-        const speedMultiplier = 0.001; // Adjust this to control rotation speed
+        const speedMultiplier = 0.001;
         rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
         rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
         useDefaultRotationRef.current = false;
@@ -332,23 +321,16 @@ const About = () => {
       const newContainerHeight = newContainerRect.height - 100;
       const newRadius = Math.min(newContainerRect.width, newContainerHeight) * 0.45;
       center.x = newContainerRect.width / 2;
-      center.y = (newContainerHeight / 2) - 20;
+      center.y = (newContainerHeight / 2) - 40;
     };
 
     window.addEventListener('resize', handleResize);
 
-    // Add click event listeners to skill names
     const skillNames = container.querySelectorAll('.skill__name');
     skillNames.forEach((skillName, index) => {
       skillName.addEventListener('click', () => {
-        // Remove active class from all icons
-        iconElements.forEach(el => {
-          const iconEl = el.querySelector('.skill__icon');
-          if (iconEl) iconEl.classList.remove('active');
-        });
-
         const icon = iconElements[index];
-        centerSkillIcon(icon);
+        centerSkillIcon(icon, container);
       });
     });
 
@@ -367,12 +349,11 @@ const About = () => {
 
       window.removeEventListener('resize', handleResize);
 
-      // Remove click event listeners from skill names
       skillNames.forEach((skillName) => {
         skillName.removeEventListener('click', () => {});
       });
     };
-  }, []);
+  }, [centerSkillIcon, skillsData]);
 
   return (
     <section id="about">
@@ -412,7 +393,7 @@ const About = () => {
             {skillsData.map((skill) => (
               <div key={skill.id} className="skill__icon-wrapper" draggable="false">
                 <div className="skill__icon">
-                  {skill.icon}
+                  <LazySkillIcon icon={skill.icon} />
                 </div>
               </div>
             ))}
@@ -426,6 +407,6 @@ const About = () => {
       </div>
     </section>
   );
-};
+});
 
 export default About;
