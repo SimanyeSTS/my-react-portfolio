@@ -25,6 +25,8 @@ const About = memo(() => {
   const useDefaultRotationRef = useRef(true);
   const animatingToFrontRef = useRef(false);
   const targetRotationRef = useRef({ x: 0, y: 0 });
+  const initialRotationRef = useRef({ x: 0.3, y: 0.3 });
+  const initialHorizontalOrientationRef = useRef(1);
 
   const skillsData = useMemo(() => [
     { id: 1, name: "JavaScript", icon: <SiJavascript /> },
@@ -87,6 +89,11 @@ const About = memo(() => {
     const targetRotationY = -Math.atan2(x, z);
     const targetRotationX = -Math.atan2(y, Math.sqrt(x * x + z * z));
 
+    initialRotationRef.current = { 
+      x: sphereRotationRef.current.x, 
+      y: sphereRotationRef.current.y 
+    };
+
     targetRotationRef.current = { 
       x: targetRotationX, 
       y: targetRotationY 
@@ -95,6 +102,9 @@ const About = memo(() => {
     animatingToFrontRef.current = true;
     useDefaultRotationRef.current = false;
     rotationSpeedRef.current = { x: 0, y: 0 };
+
+    // Reset the horizontal orientation when an icon is centered
+    initialHorizontalOrientationRef.current = 1;
 
     const iconElement = icon.querySelector('.skill__icon');
     if (iconElement) {
@@ -127,16 +137,18 @@ const About = memo(() => {
 
     const createSpherePoints = (n) => {
       const points = [];
+      
       const goldenRatio = (1 + Math.sqrt(5)) / 2;
-      const angleIncrement = Math.PI * 2 * goldenRatio;
+      const alpha = 2 * Math.PI / (goldenRatio * goldenRatio);
 
       for (let i = 0; i < n; i++) {
-        const y = 1 - (i / (n - 1)) * 2;
-        const radius = Math.sqrt(1 - y * y);
-        const theta = angleIncrement * i;
+        const z = 1 - (2 * i + 1) / n;
+        const radius = Math.sqrt(1 - z * z);
+
+        const theta = alpha * i;
 
         const x = Math.cos(theta) * radius;
-        const z = Math.sin(theta) * radius;
+        const y = Math.sin(theta) * radius;
 
         points.push({ x, y, z });
       }
@@ -189,9 +201,6 @@ const About = memo(() => {
         }
       }
 
-      const MAX_X_ROTATION = Math.PI / 2;
-      sphereRotationRef.current.x = Math.max(-MAX_X_ROTATION, Math.min(MAX_X_ROTATION, sphereRotationRef.current.x));
-
       iconElements.forEach((icon) => {
         let x = parseFloat(icon.dataset.baseX);
         let y = parseFloat(icon.dataset.baseY);
@@ -227,6 +236,9 @@ const About = memo(() => {
       isDraggingRef.current = true;
       lastMousePosRef.current = { x: e.clientX, y: e.clientY };
 
+      // Reset the horizontal orientation when starting a new drag
+      initialHorizontalOrientationRef.current = 1;
+
       iconElements.forEach(icon => {
         const iconEl = icon.querySelector('.skill__icon');
         if (iconEl) iconEl.classList.remove('active');
@@ -246,13 +258,20 @@ const About = memo(() => {
       const deltaX = e.clientX - lastMousePosRef.current.x;
       const deltaY = e.clientY - lastMousePosRef.current.y;
 
-      sphereRotationRef.current.y += deltaX * 0.005;
-      sphereRotationRef.current.x += deltaY * 0.003;
+      const rotationMultiplier = 0.005;
+      
+      // Determine horizontal direction based on initial orientation
+      const horizontalDeltaMultiplier = initialHorizontalOrientationRef.current;
+      
+      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDeltaMultiplier;
+      sphereRotationRef.current.x += deltaY * rotationMultiplier;
 
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
         const speedMultiplier = 0.001;
-        rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
-        rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
+        rotationSpeedRef.current = {
+          x: Math.sign(deltaY) * speedMultiplier,
+          y: Math.sign(deltaX) * speedMultiplier * horizontalDeltaMultiplier
+        };
         useDefaultRotationRef.current = false;
       }
 
@@ -268,6 +287,9 @@ const About = memo(() => {
       if (e.touches.length === 1) {
         isDraggingRef.current = true;
         lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+
+        // Reset the horizontal orientation when starting a new touch
+        initialHorizontalOrientationRef.current = 1;
 
         iconElements.forEach(icon => {
           const iconEl = icon.querySelector('.skill__icon');
@@ -289,13 +311,20 @@ const About = memo(() => {
       const deltaX = e.touches[0].clientX - lastMousePosRef.current.x;
       const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
 
-      sphereRotationRef.current.y += deltaX * 0.005;
-      sphereRotationRef.current.x += deltaY * 0.003;
+      const rotationMultiplier = 0.005;
+      
+      // Determine horizontal direction based on initial orientation
+      const horizontalDeltaMultiplier = initialHorizontalOrientationRef.current;
+      
+      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDeltaMultiplier;
+      sphereRotationRef.current.x += deltaY * rotationMultiplier;
 
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
         const speedMultiplier = 0.001;
-        rotationSpeedRef.current.x = Math.sign(deltaY) * speedMultiplier;
-        rotationSpeedRef.current.y = Math.sign(deltaX) * speedMultiplier;
+        rotationSpeedRef.current = {
+          x: Math.sign(deltaY) * speedMultiplier,
+          y: Math.sign(deltaX) * speedMultiplier * horizontalDeltaMultiplier
+        };
         useDefaultRotationRef.current = false;
       }
 
