@@ -26,7 +26,6 @@ const About = memo(() => {
   const animatingToFrontRef = useRef(false);
   const targetRotationRef = useRef({ x: 0, y: 0 });
   const initialRotationRef = useRef({ x: 0.3, y: 0.3 });
-  const initialHorizontalOrientationRef = useRef(1);
 
   const skillsData = useMemo(() => [
     { id: 1, name: "JavaScript", icon: <SiJavascript /> },
@@ -103,9 +102,6 @@ const About = memo(() => {
     useDefaultRotationRef.current = false;
     rotationSpeedRef.current = { x: 0, y: 0 };
 
-    // Reset the horizontal orientation when an icon is centered
-    initialHorizontalOrientationRef.current = 1;
-
     const iconElement = icon.querySelector('.skill__icon');
     if (iconElement) {
       iconElement.classList.add('active');
@@ -137,7 +133,7 @@ const About = memo(() => {
 
     const createSpherePoints = (n) => {
       const points = [];
-      
+
       const goldenRatio = (1 + Math.sqrt(5)) / 2;
       const alpha = 2 * Math.PI / (goldenRatio * goldenRatio);
 
@@ -236,9 +232,6 @@ const About = memo(() => {
       isDraggingRef.current = true;
       lastMousePosRef.current = { x: e.clientX, y: e.clientY };
 
-      // Reset the horizontal orientation when starting a new drag
-      initialHorizontalOrientationRef.current = 1;
-
       iconElements.forEach(icon => {
         const iconEl = icon.querySelector('.skill__icon');
         if (iconEl) iconEl.classList.remove('active');
@@ -260,17 +253,18 @@ const About = memo(() => {
 
       const rotationMultiplier = 0.005;
       
-      // Determine horizontal direction based on initial orientation
-      const horizontalDeltaMultiplier = initialHorizontalOrientationRef.current;
+      const cosX = Math.cos(sphereRotationRef.current.x);
+      const horizontalDirection = cosX >= 0 ? 1 : -1;
       
-      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDeltaMultiplier;
+      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDirection;
+      
       sphereRotationRef.current.x += deltaY * rotationMultiplier;
 
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
         const speedMultiplier = 0.001;
         rotationSpeedRef.current = {
           x: Math.sign(deltaY) * speedMultiplier,
-          y: Math.sign(deltaX) * speedMultiplier * horizontalDeltaMultiplier
+          y: Math.sign(deltaX) * speedMultiplier * horizontalDirection
         };
         useDefaultRotationRef.current = false;
       }
@@ -287,9 +281,6 @@ const About = memo(() => {
       if (e.touches.length === 1) {
         isDraggingRef.current = true;
         lastMousePosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-
-        // Reset the horizontal orientation when starting a new touch
-        initialHorizontalOrientationRef.current = 1;
 
         iconElements.forEach(icon => {
           const iconEl = icon.querySelector('.skill__icon');
@@ -312,18 +303,18 @@ const About = memo(() => {
       const deltaY = e.touches[0].clientY - lastMousePosRef.current.y;
 
       const rotationMultiplier = 0.005;
+
+      const cosX = Math.cos(sphereRotationRef.current.x);
+      const horizontalDirection = cosX >= 0 ? 1 : -1;
       
-      // Determine horizontal direction based on initial orientation
-      const horizontalDeltaMultiplier = initialHorizontalOrientationRef.current;
-      
-      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDeltaMultiplier;
+      sphereRotationRef.current.y += deltaX * rotationMultiplier * horizontalDirection;
       sphereRotationRef.current.x += deltaY * rotationMultiplier;
 
       if (Math.abs(deltaX) > 1 || Math.abs(deltaY) > 1) {
         const speedMultiplier = 0.001;
         rotationSpeedRef.current = {
           x: Math.sign(deltaY) * speedMultiplier,
-          y: Math.sign(deltaX) * speedMultiplier * horizontalDeltaMultiplier
+          y: Math.sign(deltaX) * speedMultiplier * horizontalDirection
         };
         useDefaultRotationRef.current = false;
       }
@@ -348,7 +339,6 @@ const About = memo(() => {
     const handleResize = () => {
       const newContainerRect = container.getBoundingClientRect();
       const newContainerHeight = newContainerRect.height - 100;
-      const newRadius = Math.min(newContainerRect.width, newContainerHeight) * 0.45;
       center.x = newContainerRect.width / 2;
       center.y = (newContainerHeight / 2) - 40;
     };
