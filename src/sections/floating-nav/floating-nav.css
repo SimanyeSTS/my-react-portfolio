@@ -12,7 +12,19 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 9;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  #floating__nav.show {
+    opacity: 1;
+    transform: translateX(-50%);
     animation: animateFloatingNav 300ms ease forwards;
+  }
+
+  #floating__nav.hide {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+    pointer-events: none;
   }
 
   @keyframes animateFloatingNav {

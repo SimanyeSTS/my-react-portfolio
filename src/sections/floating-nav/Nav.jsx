@@ -1,8 +1,8 @@
 import React from "react";
 
-const Nav = ({ className, item }) => {
+const Nav = ({ item, isActive }) => {
   return (
-    <li className={className}>
+    <li className={isActive ? "active" : ""}>
       <a href={item.link}>{item.icon}</a>
     </li>
   );
