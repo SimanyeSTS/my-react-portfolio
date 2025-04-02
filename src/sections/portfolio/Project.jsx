@@ -15,7 +15,7 @@ const Project = ({ project }) => {
         <a href={demo} className="btn sm primary" target="_blank" rel="noopener noreferrer">
           Demo
         </a>
-        {/* Only render GitHub button for non-UI/UX projects */}
+        {}
         {category !== "UI/UX" && (
           <a href={github} className="btn sm" target="_blank" rel="noopener noreferrer">
             GitHub

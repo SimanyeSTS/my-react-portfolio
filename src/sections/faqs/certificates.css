@@ -11,13 +11,16 @@
 .card.certificate {
   cursor: pointer;
   transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
 }
 
 .card.certificate:hover {
   background: var(--color-white);
 }
 
-.certificate > div {
+.certificate > div:first-child {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -26,12 +29,20 @@
 
 .certificate h5 {
   line-height: 1.4;
+  margin: 0;
+  max-height: 4.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }
 
 .certificate__icon {
   font-size: 1.2rem;
   color: var(--color-black);
   background: transparent;
+  flex-shrink: 0;
 }
 
 .certificate__details {
@@ -40,8 +51,9 @@
   margin-top: 1rem;
   opacity: 0;
   animation: animateDetails 500ms ease-in forwards;
-  min-height: 300px; /* Increased minimum height */
-  position: relative; /* Added to help with button positioning */
+  flex-grow: 1;
+  position: relative;
+  min-height: 200px;
 }
 
 @keyframes animateDetails {
@@ -51,13 +63,15 @@
 }
 
 .certificate__description-wrapper {
-  flex-grow: 1; /* Allow description to take available space */
+  max-height: 100px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
 }
 
 .certificate__description {
-  max-height: 100px;
+  height: 100%;
   overflow-y: auto;
-  margin-bottom: 1rem;
+  margin: 0;
   scrollbar-width: thin;
   scrollbar-color: var(--color-primary) transparent;
 }
@@ -81,7 +95,8 @@
   gap: 0.5rem;
   font-size: 0.9rem;
   color: var(--color-black);
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  margin-top: auto;
 }
 
 .certificate__issuer,
@@ -90,17 +105,16 @@
 }
 
 .certificate__button-wrapper {
-  margin-top: auto; /* Push button to the bottom */
+  margin-top: auto;
   width: 100%;
 }
 
 .certificate__view-btn {
-  align-self: flex-start;
   display: inline-block;
   margin-top: 0.5rem;
+  width: 100%;
 }
 
-/* Prevent certificate button click from triggering card collapse */
 .certificate__view-btn:focus {
   outline: none;
 }

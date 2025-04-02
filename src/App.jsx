@@ -18,18 +18,15 @@ const App = () => {
   const { themeState } = useThemeContext();
   const [isLoading, setIsLoading] = useState(true);
 
-  // Always scroll to top on reload
   useEffect(() => {
     window.history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
     
-    // Reset route to home on reload
     if (window.location.hash) {
       window.location.hash = '';
     }
   }, []);
 
-  // Dynamically update the theme-color meta tag
   useEffect(() => {
     const themeColorMeta = document.querySelector('meta[name="theme-color"]');
     if (themeColorMeta) {
@@ -37,14 +34,11 @@ const App = () => {
     }
   }, [themeState.primaryHue]);
 
-  // Dynamically update scrollbar styles when theme changes
   useEffect(() => {
     const root = document.documentElement;
 
-    // Update scrollbar thumb color
     root.style.setProperty("--scrollbar-thumb-color", `hsl(${themeState.primaryHue}, 89%, 41%)`);
 
-    // Update scrollbar track color based on background mode
     if (themeState.background === "bg-1") {
       root.style.setProperty("--scrollbar-track-color", "white");
     } else if (themeState.background === "bg-2") {
@@ -83,14 +77,13 @@ const App = () => {
     return () => clearInterval(checkYPosition);
   }, [siteYPostion]);
 
-  // Handle loading complete
   const handleLoadingComplete = () => {
     setIsLoading(false);
   };
 
   return (
     <>
-      {/* CustomAnimatedCursor now renders first, ensuring it's on top */}
+      {}
       <CustomAnimatedCursor />
       
       {isLoading && <LoadingScreen onLoadingComplete={handleLoadingComplete} />}
