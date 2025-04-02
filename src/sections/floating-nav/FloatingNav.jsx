@@ -5,30 +5,83 @@ import Nav from "./Nav";
 import "./floating-nav.css";
 
 const FloatingNav = () => {
-  const [showNav, setShowNav] = useState(true); // Start visible
+  const [showNav, setShowNav] = useState(true);
   const [activeLink, setActiveLink] = useState("#");
-  const [isAtTop, setIsAtTop] = useState(true);
+  const [isScrolling, setIsScrolling] = useState(false);
+  const [initialLoad, setInitialLoad] = useState(true);
 
+  // Show nav for 3 seconds on initial load
   useEffect(() => {
-    // Function to handle scroll for showing/hiding the floating nav
+    if (initialLoad) {
+      const timer = setTimeout(() => {
+        setShowNav(false);
+        setInitialLoad(false);
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [initialLoad]);
+
+  // Handle scroll events
+  useEffect(() => {
+    let scrollTimeout;
+    let lastScrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
     const handleScroll = () => {
-      const currentScrollTop = window.scrollY;
+      const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
-      // Determine if we're at the top of the page
-      const atTop = currentScrollTop <= 10;
-      setIsAtTop(atTop);
-      
-      // Always show nav at the top or when starting to scroll
-      if (atTop) {
+      // Show nav when scrolling starts
+      if (Math.abs(currentScrollTop - lastScrollTop) > 5) {
+        setIsScrolling(true);
         setShowNav(true);
-      } else {
-        // If not at top, show nav when scrolling starts
-        setShowNav(true);
-        // And start the auto-hide timer
-        startHideTimer();
+        
+        // Hide nav after 3 seconds of no scrolling
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          if (!isAtTop()) {
+            setShowNav(false);
+          }
+          setIsScrolling(false);
+        }, 3000);
       }
       
-      // Get all section elements for active link detection
+      lastScrollTop = currentScrollTop;
+      
+      // Update active link based on scroll position
+      updateActiveLink();
+    };
+
+    // Handle clicks on non-clickable elements
+    const handleClick = (e) => {
+      const target = e.target;
+      
+      // Check if the clicked element is non-interactive (text, empty space, etc.)
+      const isInteractive = 
+        target.tagName === 'A' || 
+        target.tagName === 'BUTTON' || 
+        target.closest('a') || 
+        target.closest('button') ||
+        target.closest('[onclick]') ||
+        window.getComputedStyle(target).cursor === 'pointer' ||
+        target.isContentEditable;
+      
+      if (!isInteractive) {
+        setShowNav(true);
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          if (!isAtTop()) {
+            setShowNav(false);
+          }
+        }, 3000);
+      }
+    };
+
+    // Check if we're at the top of the page
+    const isAtTop = () => {
+      return window.scrollY <= 10;
+    };
+
+    // Update active link based on scroll position
+    const updateActiveLink = () => {
       const sections = {
         home: document.querySelector("header"),
         about: document.querySelector("#about"),
@@ -37,19 +90,16 @@ const FloatingNav = () => {
         contact: document.querySelector("#contact")
       };
       
-      // Default to home/top for very top of page
-      if (window.scrollY < 100) {
+      if (isAtTop()) {
         setActiveLink("#");
         return;
       }
       
-      // Determine which section is currently visible
       let currentSection = "";
       const scrollPosition = window.scrollY + 200;
       
-      // Check each section's position
       for (const [id, section] of Object.entries(sections)) {
-        if (!section) continue; // Skip if section not found
+        if (!section) continue;
         
         const sectionTop = section.offsetTop;
         const sectionHeight = section.offsetHeight;
@@ -60,7 +110,6 @@ const FloatingNav = () => {
         }
       }
       
-      // Set active link based on current section
       if (currentSection === "home") {
         setActiveLink("#");
       } else if (currentSection) {
@@ -68,47 +117,18 @@ const FloatingNav = () => {
       }
     };
 
-    // Function to handle auto-hide after 3 seconds
-    let hideTimeout = null;
-    const startHideTimer = () => {
-      clearTimeout(hideTimeout);
-      hideTimeout = setTimeout(() => {
-        if (!isAtTop) { // Never hide if at the top
-          setShowNav(false);
-        }
-      }, 3000);
-    };
-
-    // Function to handle clicks for showing nav
-    const handleClick = (e) => {
-      if (isAtTop) return; // Don't process clicks if at top (already visible)
-      
-      const isClickableElement = 
-        e.target.tagName === 'BUTTON' || 
-        e.target.closest('button') || 
-        (e.target.tagName === 'A' && e.target.href) ||
-        e.target.closest('a') ||
-        window.getComputedStyle(e.target).cursor === 'pointer' ||
-        window.getComputedStyle(e.target.closest('*') || {}).cursor === 'pointer';
-      
-      if (!isClickableElement) {
-        setShowNav(true);
-        startHideTimer();
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("click", handleClick);
     
     // Initial check
-    handleScroll();
+    updateActiveLink();
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("click", handleClick);
-      clearTimeout(hideTimeout);
+      clearTimeout(scrollTimeout);
     };
-  }, [isAtTop]);
+  }, []);
 
   return (
     <ul id="floating__nav" className={showNav ? "show" : "hide"}>
