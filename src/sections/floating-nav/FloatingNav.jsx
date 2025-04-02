@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import data from "./data";
-import Scrollspy from "react-scrollspy";
-import Nav from "./Nav";
+import { updateActiveLinkByScroll, scrollToSection } from "../../components/navUtils";
 import "./floating-nav.css";
 
 const FloatingNav = () => {
@@ -29,6 +28,10 @@ const FloatingNav = () => {
     const handleScroll = () => {
       const currentScrollTop = window.pageYOffset || document.documentElement.scrollTop;
       
+      // Update active link based on scroll position
+      const newActiveLink = updateActiveLinkByScroll();
+      setActiveLink(newActiveLink);
+      
       // Show nav when scrolling starts
       if (Math.abs(currentScrollTop - lastScrollTop) > 5) {
         setIsScrolling(true);
@@ -45,9 +48,6 @@ const FloatingNav = () => {
       }
       
       lastScrollTop = currentScrollTop;
-      
-      // Update active link based on scroll position
-      updateActiveLink();
     };
 
     // Handle clicks on non-clickable elements
@@ -80,48 +80,11 @@ const FloatingNav = () => {
       return window.scrollY <= 10;
     };
 
-    // Update active link based on scroll position
-    const updateActiveLink = () => {
-      const sections = {
-        home: document.querySelector("header"),
-        about: document.querySelector("#about"),
-        services: document.querySelector("#services"),
-        portfolio: document.querySelector("#portfolio"),
-        contact: document.querySelector("#contact")
-      };
-      
-      if (isAtTop()) {
-        setActiveLink("#");
-        return;
-      }
-      
-      let currentSection = "";
-      const scrollPosition = window.scrollY + 200;
-      
-      for (const [id, section] of Object.entries(sections)) {
-        if (!section) continue;
-        
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.offsetHeight;
-        
-        if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-          currentSection = id;
-          break;
-        }
-      }
-      
-      if (currentSection === "home") {
-        setActiveLink("#");
-      } else if (currentSection) {
-        setActiveLink(`#${currentSection}`);
-      }
-    };
-
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("click", handleClick);
     
     // Initial check
-    updateActiveLink();
+    setActiveLink(updateActiveLinkByScroll());
     
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -130,22 +93,25 @@ const FloatingNav = () => {
     };
   }, []);
 
+  const handleLinkClick = (e, link) => {
+    e.preventDefault();
+    setActiveLink(link);
+    scrollToSection(link);
+  };
+
   return (
     <ul id="floating__nav" className={showNav ? "show" : "hide"}>
-      <Scrollspy
-        offset={-400}
-        className="scrollspy"
-        items={["header", "about", "services", "portfolio", "contact"]}
-        currentClassName="active"
-      >
-        {data.map((item) => (
-          <Nav 
-            key={item.id} 
-            item={item}
-            isActive={activeLink === item.link}
-          />
-        ))}
-      </Scrollspy>
+      {data.map((item) => (
+        <li key={item.id}>
+          <a
+            href={item.link}
+            className={activeLink === item.link ? "active" : ""}
+            onClick={(e) => handleLinkClick(e, item.link)}
+          >
+            {item.icon}
+          </a>
+        </li>
+      ))}
     </ul>
   );
 };

@@ -22,7 +22,6 @@ const LoadingScreen = ({ onLoadingComplete }) => {
   const textColor = isLightTheme ? '#100F0F' : 'white';
   const iconBgColor = isLightTheme ? 'white' : '#100F0F';
 
-  // Prevent scrolling when loading screen is visible
   useEffect(() => {
     document.body.style.overflow = isVisible ? 'hidden' : 'auto';
     return () => {
@@ -30,7 +29,6 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     };
   }, [isVisible]);
 
-  // Handle loading progress
   useEffect(() => {
     const timer = setInterval(() => {
       setLoadingProgress(prev => {
@@ -45,26 +43,21 @@ const LoadingScreen = ({ onLoadingComplete }) => {
     return () => clearInterval(timer);
   }, []);
 
-  // Handle loading completion and transitions
   useEffect(() => {
     if (loadingProgress === 100) {
-      // Step 1: Fade out progress bar
       setTimeout(() => {
         if (progressBarRef.current) {
           progressBarRef.current.classList.add('fade-out');
         }
         
-        // Step 2: Hide progress bar and prepare for profile transition
         setTimeout(() => {
           setProgressBarVisible(false);
           
-          // Step 3: Fade out initial profile
           setTimeout(() => {
             if (profileRef.current) {
               profileRef.current.classList.add('fade-out');
             }
             
-            // Step 4: Apply dim screen effect after profile fades out
             setTimeout(() => {
               setProfileVisible(false);
               setPortfolioReady(true);
@@ -72,11 +65,9 @@ const LoadingScreen = ({ onLoadingComplete }) => {
               if (loadingScreenRef.current) {
                 loadingScreenRef.current.classList.add('dim-screen');
                 
-                // Step 5: Apply brighten screen effect
                 setTimeout(() => {
                   loadingScreenRef.current.classList.add('brighten-screen');
                   
-                  // Step 6: End loading sequence
                   setTimeout(() => {
                     setIsVisible(false);
                     onLoadingComplete();

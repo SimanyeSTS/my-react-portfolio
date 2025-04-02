@@ -6,8 +6,8 @@ header {
   min-height: calc(100vh - 5rem);
   background: var(--color-white);
   transition: var(--transition);
-  overflow: hidden; /* Prevent scrolling on all views */
-  width: 100%; /* Ensure header takes full width */
+  overflow: hidden;
+  width: 100%;
 }
 
 .header__container {
@@ -62,7 +62,7 @@ header {
 .info p {
   width: 28rem;
   margin-bottom: 2rem;
-  max-width: 100%; /* Ensure text doesn't overflow */
+  max-width: 100%;
 }
 
 .profile__area {
