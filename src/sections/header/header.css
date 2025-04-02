@@ -6,13 +6,16 @@ header {
   min-height: calc(100vh - 5rem);
   background: var(--color-white);
   transition: var(--transition);
-  overflow-x: hidden;
+  overflow: hidden; /* Prevent scrolling on all views */
+  width: 100%; /* Ensure header takes full width */
 }
 
 .header__container {
   display: grid;
   grid-template-columns: 5rem auto 26rem;
   gap: 2rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 .header__socials {
@@ -59,6 +62,7 @@ header {
 .info p {
   width: 28rem;
   margin-bottom: 2rem;
+  max-width: 100%; /* Ensure text doesn't overflow */
 }
 
 .profile__area {
@@ -136,7 +140,6 @@ header {
     min-height: 100vh;
     padding-top: 5rem;
     padding-bottom: 5rem;
-    overflow: hidden;
   }
 
   .header__container {
@@ -203,7 +206,6 @@ header {
     height: auto;
     min-height: 100vh;
     padding: 3rem 0;
-    overflow: hidden;
   }
 
   .header__container {
