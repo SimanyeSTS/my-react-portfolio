@@ -18,7 +18,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 3rem;
-  align-items: stretch; /* Ensure equal heights */
+  align-items: stretch;
 }
 
 .card.portfolio__project {
@@ -26,7 +26,9 @@
   height: 430px; /* Fixed height for all cards */
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* Ensures content doesn't overflow */
+  overflow: hidden;
+  padding: 1.5rem; /* Consistent padding */
+  position: relative;
 }
 
 @keyframes animateProject {
@@ -38,54 +40,75 @@
   }
 }
 
+/* Fixed height image container */
 .portfolio__project-image {
   width: 100%;
-  height: 180px; /* Fixed height for all images */
+  height: 180px;
   background: transparent;
   border-radius: var(--border-radius-2);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 .portfolio__project-image img {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Ensures images maintain aspect ratio while filling container */
+  object-fit: cover;
 }
 
-.portfolio__project h4 {
+/* Fixed height title container */
+.portfolio__project-title {
+  height: 2rem;
   margin-bottom: 0.5rem;
-  height: 1.5em; /* Fixed height for title */
+  flex-shrink: 0;
+}
+
+.portfolio__project-title h4 {
+  margin: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.portfolio__project p {
-  margin: 0.5rem 0 1rem;
-  flex-grow: 1; /* Allow description to take available space */
-  overflow-y: auto; /* Allows scrolling for longer descriptions */
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-primary) transparent;
+/* Fixed height description container with scrolling */
+.portfolio__project-description {
+  height: 100px; /* Fixed height */
+  margin-bottom: 3.5rem; /* Add space for buttons below */
+  flex-shrink: 0;
+  overflow: hidden;
 }
 
-.portfolio__project p::-webkit-scrollbar {
+.portfolio__project-description p {
+  height: 100%;
+  margin: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary) transparent;
+  padding-right: 6px;
+}
+
+.portfolio__project-description p::-webkit-scrollbar {
   width: 6px;
 }
 
-.portfolio__project p::-webkit-scrollbar-track {
+.portfolio__project-description p::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.portfolio__project p::-webkit-scrollbar-thumb {
+.portfolio__project-description p::-webkit-scrollbar-thumb {
   background-color: var(--color-primary);
   border-radius: 10px;
 }
 
+/* Button container always at bottom */
 .portfolio__project-cta {
   display: flex;
   gap: 1rem;
-  margin-top: auto; /* Pushes buttons to bottom of card */
+  position: absolute;
+  bottom:.5rem;
+  left: 1.5rem;
+  right: 1.5rem;
 }
 
 .portfolio__project:hover .btn.sm {
@@ -98,6 +121,12 @@
   border-color: var(--color-primary);
 }
 
+/* Styling for tech keywords */
+.tech-keyword {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
 /* MEDIA QUERIES (tablets) */
 @media screen and (max-width: 1024px) {
   .portfolio__projects {
@@ -106,7 +135,12 @@
   }
   
   .card.portfolio__project {
-    height: 400px; /* Adjust for tablet */
+    height: 400px;
+  }
+  
+  .portfolio__project-description {
+    height: 80px;
+    margin-bottom: 3.5rem; /* Maintain space for buttons */
   }
 }
 
@@ -126,6 +160,11 @@
   }
   
   .card.portfolio__project {
-    height: 420px; /* Adjust for mobile */
+    height: 420px;
+  }
+  
+  .portfolio__project-description {
+    height: 90px;
+    margin-bottom: 3.5rem; /* Maintain space for buttons */
   }
 }

@@ -43,6 +43,7 @@
   color: var(--color-black);
   background: transparent;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .certificate__details {
