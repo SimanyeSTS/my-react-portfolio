@@ -93,7 +93,7 @@ const LoadingScreen = ({ onLoadingComplete }) => {
       }}
     >
       <div className="content-container">
-        {/* Initial profile area that stays centered */}
+        {}
         {profileVisible && (
           <div 
             ref={profileRef}

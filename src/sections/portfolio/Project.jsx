@@ -1,8 +1,13 @@
 import React from "react";
 import Card from "../../components/Card";
+import { useThemeContext } from "../../context/theme-context";
 
 const Project = ({ project }) => {
-  const { title, desc, demo, github, image, category } = project;
+  const { themeState } = useThemeContext();
+  const { title, desc, demo, github, image, imageLight, category } = project;
+  
+  // Determine which image to use based on background theme
+  const displayImage = themeState.background === "bg-1" ? imageLight : image;
 
   // List of technology keywords to highlight
   const techKeywords = [
@@ -35,7 +40,11 @@ const Project = ({ project }) => {
     <Card className="portfolio__project">
       {/* Image container with fixed height */}
       <div className="portfolio__project-image">
-        <img src={image} alt={title} />
+        <img 
+          src={displayImage} 
+          alt={title} 
+          className="project-image-transition" 
+        />
       </div>
       
       {/* Title with fixed height */}

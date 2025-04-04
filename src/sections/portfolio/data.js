@@ -1,21 +1,30 @@
 import FortuneTrackDesign from "../../assets/FortuneTrack-Design.png";
+import FortuneTrackDesignLight from "../../assets/FortuneTrack-Design-Light.png";
 import WeatherWisePlus from "../../assets/WeatherWise++.png";
+import WeatherWisePlusLight from "../../assets/WeatherWise++-Light.png";
 import FortuneTrack from "../../assets/FortuneTrack.png";
+import FortuneTrackLight from "../../assets/FortuneTrack-Light.png";
 import VuePortfolioDesign from "../../assets/VuePortfolio-Design.png";
+import VuePortfolioDesignLight from "../../assets/VuePortfolio-Design-Light.png";
 import SnackShackDesign from "../../assets/SnackShack-Design.png";
+import SnackShackDesignLight from "../../assets/SnackShack-Design-Light.png";
 import VuePortfolio from "../../assets/VuePortfolio.png";
+import VuePortfolioLight from "../../assets/VuePortfolio-Light.png";
 import AuraArtistry from "../../assets/AuraArtistry.png";
+import AuraArtistryLight from "../../assets/AuraArtistry-Light.png";
 import WeatherWise from "../../assets/WeatherWise.png";
+import WeatherWiseLight from "../../assets/WeatherWise-Light.png";
 import TimeScape from "../../assets/TimeScape.png";
-
+import TimeScapeLight from "../../assets/TimeScape-Light.png";
 
 const data = [
   {
     id: 1,
     category: "UI/UX",
     image: FortuneTrackDesign,
+    imageLight: FortuneTrackDesignLight,
     title: "FortuneTrack - Design",
-    desc: "A comprehensive financial analytics UI designed in Figma, showcasing my ability to create complex data visualization interfaces with a clean, professional aesthetic. The project features a component-based design system with custom charts, interactive dashboards, and a cohesive color scheme dominated by professional blues. FortuneTrack demonstrates my proficiency in Figma's advanced features including auto-layout, component variants, and prototyping capabilities while delivering an intuitive interface for complex financial data.",
+    desc: "Created a comprehensive financial analytics UI in Figma, featuring a component-based design system with custom charts and interactive dashboards. Implemented professional blues in the color scheme while utilizing Figma's advanced features including auto-layout, component variants, and prototyping capabilities to deliver an intuitive interface for complex financial data visualization.",
     demo: "https://www.figma.com/design/HXmTERwjHOYsptklvTHAkW/FortuneTrack-Capstone?node-id=28-248&t=zu6TKAQspc9W5rYt-1",
     github: null,
   },
@@ -23,8 +32,9 @@ const data = [
     id: 2,
     category: "Front-End",
     image: WeatherWisePlus,
+    imageLight: WeatherWisePlusLight,
     title: "WeatherWise ++",
-    desc: "WeatherWise++ is an interactive weather map application developed using React and React Leaflet, showcasing my frontend expertise. Users can explore real-time weather data by clicking on the map or searching for specific cities, with features like geolocation, dark mode, and responsive design ensuring a seamless experience across devices. This project not only highlights my ability to integrate APIs and manage state effectively but also demonstrates my commitment to creating user-friendly interfaces with robust error handling.",
+    desc: "Developed an interactive weather map application using React and React Leaflet that allows users to explore real-time weather data through map clicks or city searches. Implemented features including geolocation, dark mode, API integration, and state management while ensuring responsive design and robust error handling for seamless cross-device experiences.",
     demo: "https://weather-wise-plus.vercel.app/",
     github: "https://github.com/SimanyeSTS/weather-map-app.git",
   },
@@ -32,8 +42,9 @@ const data = [
     id: 3,
     category: "Back-End",
     image: FortuneTrack,
+    imageLight: FortuneTrackLight,
     title: "FortuneTrack",
-    desc: "FortuneTrack is an AI-driven stock market analysis platform built with the MEVN stack, designed to provide real-time insights and predictive analytics across four major industries: Retail, Technology, Food & Beverages, and Healthcare. The backend, powered by Node.js, Express.js, and MySQL, features robust API integrations with Alpha Vantage for live market data and Gemini AI for predictive insights. Key backend functionalities include JWT authentication, role-based access control, automated data updates via cron jobs, and CI/CD pipelines using GitHub Actions. The system is optimized for scalability, with plans to migrate to AWS Lambda for enhanced performance. This project demonstrates my ability to design and implement complex, data-driven backend systems with a focus on security, efficiency, and scalability.",
+    desc: "Architected an AI-driven stock market analysis platform using the MEVN stack with focus on the Node.js and Express.js backend connected to MySQL. Implemented JWT authentication, role-based access control, and API integrations with Alpha Vantage and Gemini AI. Built automated data update systems with cron jobs and configured CI/CD pipelines via GitHub Actions. Designed the system architecture for scalability with planned AWS Lambda migration.",
     demo: "https://fortunetrack-91faa.web.app/",
     github: "https://github.com/SimanyeSTS/FortuneTrack.git",
   },
@@ -41,26 +52,29 @@ const data = [
     id: 4,
     category: "UI/UX",
     image: VuePortfolioDesign,
+    imageLight: VuePortfolioDesignLight,
     title: "VueJS Portfolio - Design",
-    desc: "A sophisticated developer portfolio UI design created in Figma, featuring a striking dark theme with vibrant accent colors that highlight key information while maintaining readability. This design demonstrates my command of Figma's component system, allowing for consistent styling across multiple portfolio sections including projects, skills, and contact information. The interface incorporates Vue.js-inspired design patterns with thoughtful micro-interactions, responsive layouts, and a carefully crafted typographic system. This project showcases my ability to create visually compelling interfaces that balance modern aesthetics with functional information architecture, all while maintaining the technical considerations necessary for Vue.js implementation.",
+    desc: "Designed a sophisticated developer portfolio UI in Figma with a dark theme and vibrant accent colors for optimal information hierarchy. Built a consistent component system across portfolio sections (projects, skills, contact) while incorporating Vue.js-inspired design patterns. Developed responsive layouts with thoughtful micro-interactions and a carefully crafted typographic system that balances modern aesthetics with functional information architecture.",
     demo: "https://www.figma.com/design/uRPLAZmDEjBFdNfsV74CbQ/Vue.js-Portfolio?node-id=0-1&t=JzEQBtWXPlSvGXcX-1",
-    github: null, // No GitHub link for UI/UX projects
+    github: null,
   },
   {
     id: 5,
     category: "UI/UX",
     image: SnackShackDesign,
+    imageLight: SnackShackDesignLight,
     title: "Snack Shack - Design",
-    desc: "In this group project, I was specifically responsible for designing the tablet and mobile frames for the Fast Food Snack Shack fast food app using Figma. Working from the established desktop design, I created dedicated frames for smaller devices, ensuring all essential content and functionality remained accessible across the three screen sizes. My work involved carefully considering appropriate scaling, layout adjustments, and touch-friendly elements to maintain a consistent user experience across desktop, tablet, and mobile formats. This project demonstrates my ability to think across multiple device contexts while maintaining design coherence in collaborative environments.",
+    desc: "Led the responsive design optimization for a fast food app by creating dedicated tablet and mobile frames in Figma. Adapted the established desktop design with appropriate scaling, layout adjustments, and touch-friendly elements to ensure consistent user experience across all devices. Collaborated effectively within a design team to maintain visual coherence while optimizing for different screen contexts.",
     demo: "https://www.figma.com/design/UwJTS7YCLV0X1r3ncT3s3J/Fast-Food-Snack-Shack?node-id=0-1&t=ARl1TFPu8pWz3uoX-1",
-    github: null, // No GitHub link for UI/UX projects
+    github: null,
   },
   {
     id: 6,
     category: "Front-End",
     image: VuePortfolio,
+    imageLight: VuePortfolioLight,
     title: "VueJS Portfolio",
-    desc: "Showcasing my frontend expertise, this Vue.js portfolio project features a dynamic and responsive design that highlights my skills, projects, and testimonials. Utilizing Vue Router for seamless navigation and Vuex for state management, the application integrates various components such as a contact form, project cards, and a visually appealing layout, all styled with CSS and Bootstrap. The project is hosted on Firebase, demonstrating my ability to deploy and manage web applications effectively.",
+    desc: "Built a dynamic personal portfolio using Vue.js with Vue Router for navigation and Vuex for state management. Developed reusable components including project cards, skill displays, and a contact form. Styled the application using CSS and Bootstrap for responsive layouts and deployed the production build to Firebase hosting.",
     demo: "https://simanye-somdaka-s-portfolio.web.app/",
     github: "https://github.com/SimanyeSTS/finalPortfolio1.git",
   },
@@ -68,8 +82,9 @@ const data = [
     id: 7,
     category: "Back-End",
     image: AuraArtistry,
+    imageLight: AuraArtistryLight,
     title: "AuraArtistry",
-    desc: "The AuraArtistry project showcases my backend expertise through the development of a robust RESTful API using Node.js and Express. This project features a well-structured directory that includes controllers for user and product management, middleware for error handling and token verification, and a MySQL database connection for efficient data retrieval and manipulation. By implementing secure user authentication and CRUD operations for products, I ensured a seamless and secure experience for users, demonstrating my ability to create scalable and maintainable backend solutions.",
+    desc: "Engineered a RESTful API using Node.js and Express in a partner project, focusing on backend architecture with structured controllers for user and product management. Implemented middleware for error handling and token verification while establishing MySQL database connections for efficient data operations. Created secure authentication systems and full CRUD functionality for products in an e-commerce context.",
     demo: "https://vuejs-frontend-e2fc1.web.app/",
     github: "https://github.com/SimanyeSTS/AuraArtistry-Project.git",
   },
@@ -77,8 +92,9 @@ const data = [
     id: 8,
     category: "Back-End",
     image: WeatherWise,
+    imageLight: WeatherWiseLight,
     title: "WeatherWise",
-    desc: "WeatherWise is a dynamic weather application where I contributed significantly to both frontend and backend development. Primarily focused on frontend, I also optimized the backend's Python/Flask API to enhance scalability and efficiency in data integration from external weather services. This involved refining data processing and structuring to ensure seamless and rapid delivery of weather information, including current conditions, forecasts, and pollution data, to the user interface.",
+    desc: "Contributed to both frontend and backend development of a weather application, with primary responsibility for optimizing the Python/Flask API. Enhanced backend scalability and efficiency for integrating external weather service data, focusing on streamlined data processing and structuring to deliver current conditions, forecasts, and pollution data to the user interface.",
     demo: "https://weather-wise-sftw-eng.vercel.app/",
     github: "https://github.com/SimanyeSTS/weather_app.git",
   },
@@ -86,8 +102,9 @@ const data = [
     id: 9,
     category: "Front-End",
     image: TimeScape,
+    imageLight: TimeScapeLight,
     title: "TimeScape",
-    desc: "TimeScape is an interactive clock application that showcases my frontend development skills through a visually appealing and responsive design. Utilizing HTML, CSS, and JavaScript, I created a dynamic clock that accurately reflects real-time hours, minutes, and seconds with smooth animations. The project features a modern aesthetic with a vibrant gradient background and a sleek, circular clock interface, demonstrating my ability to blend functionality with engaging user experiences.",
+    desc: "Created an interactive clock application using HTML, CSS, and JavaScript featuring smooth animations that accurately display real-time hours, minutes, and seconds. Implemented a modern interface with gradient backgrounds and circular design elements while ensuring responsive behavior across different screen sizes.",
     demo: "https://clock-work-three.vercel.app/",
     github: "https://github.com/SimanyeSTS/clockWork.git",
   },

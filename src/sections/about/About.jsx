@@ -6,13 +6,17 @@ import Card from "../../components/Card";
 import "./about.css";
 import {
   FaReact, FaNode, FaJava, FaPython,
-  FaHtml5, FaCss3Alt, FaDatabase, FaCloud,
-  FaCode, FaGitAlt, FaDocker, FaGithub, FaGitlab
+  FaHtml5, FaCss3Alt,FaGitAlt, FaGithub, FaBootstrap,
+  FaVuejs, FaAws, FaNpm, FaAndroid
 } from "react-icons/fa";
 import {
   SiJavascript, SiTailwindcss, SiMongodb,
-  SiExpress, SiNextdotjs, SiSqlite,
-  SiTestinglibrary, SiFigma, SiVisualstudiocode
+  SiExpress, SiNextdotjs, SiMysql,
+  SiTestinglibrary, SiFigma, SiVisualstudiocode,
+  SiVite, SiFlutter, SiDart, SiCplusplus, 
+  SiCsharp, SiFirebase, SiVercel, 
+  SiNetlify, SiPostman, SiVisualstudio,
+  SiFlask, SiUnity, SiApache
 } from "react-icons/si";
 
 const About = memo(() => {
@@ -28,28 +32,56 @@ const About = memo(() => {
   const initialRotationRef = useRef({ x: 0.3, y: 0.3 });
 
   const skillsData = useMemo(() => [
-    { id: 1, name: "JavaScript", icon: <SiJavascript /> },
-    { id: 2, name: "React", icon: <FaReact /> },
-    { id: 3, name: "Node.js", icon: <FaNode /> },
-    { id: 4, name: "Python", icon: <FaPython /> },
-    { id: 5, name: "Java", icon: <FaJava /> },
-    { id: 6, name: "HTML5", icon: <FaHtml5 /> },
-    { id: 7, name: "CSS3", icon: <FaCss3Alt /> },
-    { id: 8, name: "MongoDB", icon: <SiMongodb /> },
-    { id: 9, name: "Tailwind", icon: <SiTailwindcss /> },
-    { id: 10, name: "Git", icon: <FaGitAlt /> },
-    { id: 11, name: "Docker", icon: <FaDocker /> },
-    { id: 12, name: "Backend", icon: <FaCode /> },
-    { id: 13, name: "Cloud", icon: <FaCloud /> },
-    { id: 14, name: "Database", icon: <FaDatabase /> },
-    { id: 15, name: "Express", icon: <SiExpress /> },
-    { id: 16, name: "Next.js", icon: <SiNextdotjs /> },
-    { id: 17, name: "SQLite", icon: <SiSqlite /> },
-    { id: 18, name: "Testing", icon: <SiTestinglibrary /> },
-    { id: 19, name: "GitHub", icon: <FaGithub /> },
-    { id: 20, name: "GitLab", icon: <FaGitlab /> },
-    { id: 21, name: "VS Code", icon: <SiVisualstudiocode /> },
-    { id: 22, name: "Figma", icon: <SiFigma /> },
+    // Core Programming Languages
+    { id: 1, name: "JavaScript", icon: <SiJavascript />, category: "language" },
+    { id: 2, name: "Python", icon: <FaPython />, category: "language" },
+    { id: 3, name: "Java", icon: <FaJava />, category: "language" },
+    { id: 4, name: "C++", icon: <SiCplusplus />, category: "language" },
+    { id: 5, name: "C#", icon: <SiCsharp />, category: "language" },
+    { id: 6, name: "Dart", icon: <SiDart />, category: "language" },
+    
+    // Frontend
+    { id: 7, name: "HTML5", icon: <FaHtml5 />, category: "frontend" },
+    { id: 8, name: "CSS3", icon: <FaCss3Alt />, category: "frontend" },
+    { id: 9, name: "React", icon: <FaReact />, category: "frontend" },
+    { id: 10, name: "Vue.js", icon: <FaVuejs />, category: "frontend" },
+    { id: 11, name: "Next.js", icon: <SiNextdotjs />, category: "frontend" },
+    { id: 12, name: "Bootstrap", icon: <FaBootstrap />, category: "frontend" },
+    { id: 13, name: "Tailwind CSS", icon: <SiTailwindcss />, category: "frontend" },
+    { id: 14, name: "Vite", icon: <SiVite />, category: "frontend" },
+    
+    // Backend
+    { id: 15, name: "Node.js", icon: <FaNode />, category: "backend" },
+    { id: 16, name: "Express", icon: <SiExpress />, category: "backend" },
+    { id: 17, name: "Flask", icon: <SiFlask />, category: "backend" },
+    
+    // Database
+    { id: 18, name: "MongoDB", icon: <SiMongodb />, category: "database" },
+    { id: 19, name: "MySQL", icon: <SiMysql />, category: "database" },
+    { id: 20, name: "Firebase", icon: <SiFirebase />, category: "database" },    
+    // Cloud & Hosting
+    { id: 21, name: "AWS", icon: <FaAws />, category: "cloud" },
+    { id: 22, name: "Vercel", icon: <SiVercel />, category: "cloud" },
+    { id: 23, name: "Netlify", icon: <SiNetlify />, category: "cloud" },
+    
+    // Mobile Development
+    { id: 24, name: "Flutter", icon: <SiFlutter />, category: "mobile" },
+    { id: 25, name: "Android Studio", icon: <FaAndroid />, category: "mobile" },
+    
+    // Game Development
+    { id: 26, name: "Unity", icon: <SiUnity />, category: "game" },
+    
+    // DevOps & Tools
+    { id: 27, name: "Git", icon: <FaGitAlt />, category: "devops" },
+    { id: 28, name: "GitHub", icon: <FaGithub />, category: "devops" },
+    { id: 29, name: "NPM", icon: <FaNpm />, category: "devops" },
+    
+    // IDE & Design
+    { id: 30, name: "Visual Studio", icon: <SiVisualstudio />, category: "tools" },
+    { id: 31, name: "Apache", icon: <SiApache />, category: "tools" },  // Replaced NetBeans with Apache
+    { id: 32, name: "Figma", icon: <SiFigma />, category: "tools" },
+    { id: 33, name: "Postman", icon: <SiPostman />, category: "tools" },
+    { id: 34, name: "Testing", icon: <SiTestinglibrary />, category: "tools" },
   ], []);
 
   const LazySkillIcon = ({ icon }) => {
