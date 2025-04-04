@@ -1,28 +1,58 @@
-import { createContext, useContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer, useEffect, useCallback } from "react";
 import themeReducer from "./themeReducer";
 
 export const ThemeContext = createContext();
 
-const initialThemeState = JSON.parse(localStorage.getItem("themeSettings")) || {
-  primary: "color-1",
-  primaryHue: 270, // Default primary hue
-  background: "bg-1",
+const getInitialThemeState = () => {
+  const storedTheme = JSON.parse(localStorage.getItem("themeSettings")) || {};
+  
+  if (!storedTheme.background || localStorage.getItem('isFreshLoad') === 'true') {
+    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return {
+      primary: storedTheme.primary || "color-1",
+      primaryHue: storedTheme.primaryHue || 270,
+      background: systemPrefersDark ? "bg-2" : "bg-1"
+    };
+  }
+  
+  return storedTheme;
 };
 
 export const ThemeProvider = ({ children }) => {
   const [themeState, dispatchTheme] = useReducer(
     themeReducer,
-    initialThemeState
+    getInitialThemeState()
   );
 
-  const themeHandler = (buttonCLassName) => {
-    dispatchTheme({ type: buttonCLassName });
+  const themeHandler = (buttonClassName) => {
+    dispatchTheme({ type: buttonClassName });
+    if (buttonClassName === "bg-1" || buttonClassName === "bg-2") {
+      localStorage.setItem('isFreshLoad', 'false');
+    }
   };
 
-  // save theme settings to local storage
+  const handleSystemThemeChange = useCallback((e) => {
+    if (localStorage.getItem('isFreshLoad') !== 'false') {
+      dispatchTheme({
+        type: e.matches ? "bg-2" : "bg-1"
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    mediaQuery.addEventListener('change', handleSystemThemeChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemThemeChange);
+  }, [handleSystemThemeChange]);
+
   useEffect(() => {
     localStorage.setItem("themeSettings", JSON.stringify(themeState));
   }, [themeState.primary, themeState.background]);
+
+  useEffect(() => {
+    localStorage.setItem('isFreshLoad', 'true');
+    return () => localStorage.setItem('isFreshLoad', 'false');
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ themeState, themeHandler }}>
@@ -31,7 +61,4 @@ export const ThemeProvider = ({ children }) => {
   );
 };
 
-// custom hook to use the theme context anywhere in the app
-export const useThemeContext = () => {
-  return useContext(ThemeContext);
-};
+export const useThemeContext = () => useContext(ThemeContext);
