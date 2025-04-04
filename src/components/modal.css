@@ -6,7 +6,7 @@
   bottom: 0;
   left: 0;
   backdrop-filter: blur(5px);
-  z-index: 200; /* Higher than Navbar but lower than Modal */
+  z-index: 200;
   opacity: 0;
   animation: animateBackdrop 500ms ease-in forwards;
 }
@@ -19,7 +19,7 @@
 
 .Card {
 
-  z-index: 300; /* Higher than backdrop and Navbar */
+  z-index: 300;
 
 }
 
